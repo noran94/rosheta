@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>All Products</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="scroll" padding>
+    <form #form="ngForm" (ngSubmit)="addProduct(form)">
+      <ion-row color="primary" class="ion-justify-content-center ion-margin-top">
+        <ion-col size-md="3" size-lg="3" size-xs="12">
+          <ion-item>
+            <ion-input name="nameEN" type="text" placeholder="Product Name English" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-md="3" size-lg="3" size-xs="12">
+          <ion-item>
+            <ion-input name="nameAr" type="text" placeholder="Product Name Arabic" ngModel required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-md="2" size-lg="2" size-xs="4">
+          <ion-button size="default" (click)="addProduct()" type="submit" color="success" [disabled]="form.invalid" expand="block">Add Product
+          </ion-button>
+        </ion-col>
+        <ion-col size-md="2" size-lg="2" size-xs="4">
+          <ion-button size="default" (click)="searchProduct()" type="submit" color="primary" expand="block">Search 
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-card class="card-padding ion-margin-top">
+      <ion-list>
+        <ion-item class="ion-text-center">
+          <ion-label>Product ID</ion-label>
+          <ion-label>Product English</ion-label>
+          <ion-label>Product Arabic</ion-label>
+        </ion-item>
+        <ion-item-sliding *ngFor="let product of products">
+          <ion-item class="ion-text-center">
+            <ion-label>{{product.id}}</ion-label>
+            <ion-label>{{product.nameEn}}</ion-label>
+            <ion-label>{{product.nameAr}}</ion-label>
+            <ion-item-options side="end">
+              <ion-item-option color="success" (click)="editProduct(product)">
+                <ion-icon name="pencil-outline" class="ion-padding-horizontal"></ion-icon>
+              </ion-item-option>
+              <ion-item-option color="danger" (click)="deleteProduct(product)">
+                <ion-icon name="trash-outline" class="ion-padding-horizontal"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-card>
+  </div>
+</ion-content>
