@@ -6,7 +6,7 @@
 
 <ion-content>
   <div class="scroll" padding>
-    <form #form="ngForm" (ngSubmit)="addCategory(form)">
+    <form #form="ngForm" (ngSubmit)="addItem()">
       <ion-row color="primary" class="ion-justify-content-center ion-margin-top">
         <ion-col size-md="3" size-lg="3" size-xs="12">
           <ion-item>
@@ -19,11 +19,11 @@
           </ion-item>
         </ion-col>
         <ion-col size-md="2" size-lg="2" size-xs="4">
-          <ion-button size="default" (click)="addCategory()" type="submit" color="success" [disabled]="form.invalid" expand="block">Add Category
+          <ion-button size="default" (click)="addItem()" type="submit" color="success" [disabled]="form.invalid" expand="block">Add Category
           </ion-button>
         </ion-col>
         <ion-col size-md="2" size-lg="2" size-xs="4">
-          <ion-button size="default" (click)="searchCategory()" type="submit" color="primary" expand="block">Search 
+          <ion-button size="default" (click)="searchItem()" type="submit" color="primary" expand="block">Search 
           </ion-button>
         </ion-col>
       </ion-row>
@@ -35,16 +35,16 @@
           <ion-label>Category English</ion-label>
           <ion-label>Category Arabic</ion-label>
         </ion-item>
-        <ion-item-sliding *ngFor="let category of categories">
+        <ion-item-sliding *ngFor="let category of list">
           <ion-item class="ion-text-center">
             <ion-label>{{category.id}}</ion-label>
             <ion-label>{{category.nameEn}}</ion-label>
             <ion-label>{{category.nameAr}}</ion-label>
             <ion-item-options side="end">
-              <ion-item-option color="success" (click)="editCategory(category)">
+              <ion-item-option color="success" (click)="editItem(category)">
                 <ion-icon name="pencil-outline" class="ion-padding-horizontal"></ion-icon>
               </ion-item-option>
-              <ion-item-option color="danger" (click)="deleteCategory(category)">
+              <ion-item-option color="danger" (click)="deleteItem(category)">
                 <ion-icon name="trash-outline" class="ion-padding-horizontal"></ion-icon>
               </ion-item-option>
             </ion-item-options>

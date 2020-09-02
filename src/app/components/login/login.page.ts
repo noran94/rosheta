@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -7,12 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  constructor(private loginService:LoginService) { }
 
   ngOnInit() {
   }
   login(form){
-    console.log(form);
+    this.loginService.login(form.value).subscribe((data)=>{
+      console.log(data.headers.keys);
+
+    })
   }
 
 }

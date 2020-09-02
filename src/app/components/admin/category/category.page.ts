@@ -1,143 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { CategoriesService } from 'src/app/services/categories.service';
+import { NgForm } from '@angular/forms';
+import { SharedService } from 'src/app/services/shared.service';
+import { Shared } from '../../sharedComponent';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.page.html',
   styleUrls: ['./category.page.scss'],
 })
-export class CategoryPage implements OnInit {
+export class CategoryPage extends Shared {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  pageNumber = 0;
-  pageSize = 10;
-  categories = [
-    {
-      id: 111,
-      nameEn: 'noran',
-      nameAr: 'نوران'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    }]
-  constructor() { }
+  @ViewChild('form',  { static: true }) form: any;
 
-  ngOnInit() {
+  url = 'category';
+  constructor(public sharedService: SharedService) {
+    super(sharedService);
   }
-  addProduct(from) {
-    console.log(from);
-  }
-  editProduct(category){
-    console.log(category);
-  }
-  deleteProduct(category){
-    console.log(category);
-  }
-  searchProduct(){
-
-  }
-  loadData(event) {
-    setTimeout(() => {
-      console.log('Done');
-      event.target.complete();
-      this.pageNumber++;
-      // this.categorys.push(this.categorys[0]);
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      // if (data.length == 1000) {
-      //   event.target.disabled = true;
-      // }
-    }, 500);
-  }
-
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-  }
-
 }
