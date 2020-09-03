@@ -1,38 +1,45 @@
-import { Injectable } from '@angular/core';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpParams, HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SharedService {
-  pageNumber;
-  private pageSize = 10;
-  constructor(private http: HttpClient) { }
+    pageNumber;
+    private pageSize = 10;
 
-  listItems(formValue, url) {
-    return this.http.get(url, { params: this.getFilter(formValue) });
-  }
-  addItem(item, url) {
-    return this.http.post(url, { item });
-  }
-  editItem(item, url) {
-    return this.http.put(url, { item });
-  }
-  deleteItem(id, url) {
-    return this.http.delete(url + '/' + id);
-  }
-  getItem(id, url) {
-    return this.http.get(url + '/' + id);
-  }
-  getFilter(formValue) {
-    let params = new HttpParams();
-    for (let key in formValue) {
-      if (formValue[key] && formValue[key] !=='' ) {
-        params = params.set(key, formValue[key]);
-      }
+    constructor(private http: HttpClient) {
     }
-    params = params.set('pageNum', this.pageNumber);
-    params = params.set('pageSize', this.pageSize.toString());
-    return params;
-  }
+
+    listItems(formValue, url) {
+        return this.http.get(url, {params: this.getFilter(formValue)});
+    }
+
+    addItem(item, url) {
+        return this.http.post(url, item);
+    }
+
+    editItem(item, url) {
+        return this.http.put(url, item);
+    }
+
+    deleteItem(id, url) {
+        return this.http.delete(url + '/' + id);
+    }
+
+    getItem(id, url) {
+        return this.http.get(url + '/' + id);
+    }
+
+    getFilter(formValue) {
+        let params = new HttpParams();
+        for (const key in formValue) {
+            if (formValue[key] && formValue[key] !== '') {
+                params = params.set(key, formValue[key]);
+            }
+        }
+        params = params.set('pageNum', this.pageNumber);
+        params = params.set('pageSize', this.pageSize.toString());
+        return params;
+    }
 }

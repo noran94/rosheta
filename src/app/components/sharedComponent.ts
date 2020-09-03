@@ -1,6 +1,7 @@
-import { OnInit, ViewChild } from '@angular/core';
-import { SharedService } from '../services/shared.service';
-import { NgForm } from '@angular/forms';
+import {OnInit, ViewChild} from '@angular/core';
+import {SharedService} from '../services/shared.service';
+import {NgForm} from '@angular/forms';
+import {HttpHeaders} from '@angular/common/http';
 
 export abstract class Shared implements OnInit {
     list;
@@ -9,45 +10,56 @@ export abstract class Shared implements OnInit {
     abstract url;
     id;
     abstract form;
-    constructor(public sharedService: SharedService) { }
+
+    constructor(public sharedService: SharedService) {
+    }
+
     ngOnInit() {
         this.sharedService.pageNumber = 0;
         if (this.isList) {
             this.listItems();
         }
     }
+
     listItems() {
         this.sharedService.listItems(this.form.value, this.url).subscribe((data: any) => {
             this.list = data.data;
         });
     }
-    addItem() {
+
+    addItem(reload?) {
         this.sharedService.addItem(this.form.value, this.url).subscribe((data) => {
-            console.log(data);
-        })
+            this.form.reset();
+            if (reload) {
+                this.searchItem();
+            }
+        });
     }
+
     editItem() {
         this.sharedService.editItem(this.form.value, this.url).subscribe((data) => {
-            console.log(data);
-        })
+        });
     }
+
     deleteItem() {
         this.sharedService.deleteItem(this.id, this.url).subscribe((data) => {
-            console.log(data);
             this.searchItem();
-        })
+        });
     }
+
     searchItem() {
         this.disabledLoading = false;
         this.list = [];
         this.listItems();
 
     }
+
     getItem() {
         this.sharedService.getItem(this.id, this.url).subscribe((data) => {
             console.log(data);
-        })
+        });
     }
+
     loadData(event) {
         if (this.disabledLoading) {
             return;
