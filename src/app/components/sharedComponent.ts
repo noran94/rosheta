@@ -1,7 +1,6 @@
-import {OnInit, ViewChild} from '@angular/core';
-import {SharedService} from '../services/shared.service';
-import {NgForm} from '@angular/forms';
-import {HttpHeaders} from '@angular/common/http';
+import { OnInit, ViewChild } from '@angular/core';
+import { SharedService } from '../services/shared.service';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 export abstract class Shared implements OnInit {
     list;
@@ -10,6 +9,7 @@ export abstract class Shared implements OnInit {
     abstract url;
     id;
     abstract form;
+    @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
     constructor(public sharedService: SharedService) {
     }
@@ -19,11 +19,22 @@ export abstract class Shared implements OnInit {
         if (this.isList) {
             this.listItems();
         }
+        this.customOnInit();
     }
 
-    listItems() {
+    listItems(event?) {
         this.sharedService.listItems(this.form.value, this.url).subscribe((data: any) => {
-            this.list = data.data;
+            if (event) {
+                this.list.push(...data.data);
+                this.infiniteScroll.complete();
+            } else {
+                this.list = data.data;
+            }
+            this.disabledLoading = this.list.length === data.total;
+        }, () => {
+            if (event) {
+                this.infiniteScroll.complete();
+            }
         });
     }
 
@@ -36,13 +47,18 @@ export abstract class Shared implements OnInit {
         });
     }
 
-    editItem() {
-        this.sharedService.editItem(this.form.value, this.url).subscribe((data) => {
+    editItem(modal?) {
+        let data = modal ? modal : this.form.value;
+        this.sharedService.editItem(data, this.url).subscribe((data) => {
+            if (modal) {
+                this.searchItem();
+            }
         });
     }
 
-    deleteItem() {
-        this.sharedService.deleteItem(this.id, this.url).subscribe((data) => {
+    deleteItem(id?) {
+        let data = id ? id : this.id;
+        this.sharedService.deleteItem(data, this.url).subscribe((data) => {
             this.searchItem();
         });
     }
@@ -50,6 +66,7 @@ export abstract class Shared implements OnInit {
     searchItem() {
         this.disabledLoading = false;
         this.list = [];
+        this.sharedService.pageNumber = 0;
         this.listItems();
 
     }
@@ -62,13 +79,12 @@ export abstract class Shared implements OnInit {
 
     loadData(event) {
         if (this.disabledLoading) {
+            this.infiniteScroll.complete();
             return;
         }
-        setTimeout(() => {
-            console.log('Done');
-            event.target.complete();
-            this.sharedService.pageNumber++;
-            this.listItems();
-        }, 500);
+        this.sharedService.pageNumber++;
+        this.listItems(true);
     }
+
+    customOnInit() { }
 }

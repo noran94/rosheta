@@ -1,142 +1,35 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { SharedService } from 'src/app/services/shared.service';
+import { Shared } from '../../sharedComponent';
+import { ModalPage } from '../../shared/modal/modal.page';
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
 })
-export class ProductsPage implements OnInit {
+export class ProductsPage extends Shared {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  pageNumber = 0;
-  pageSize = 10;
-  products = [
-    {
-      id: 111,
-      nameEn: 'noran',
-      nameAr: 'نوران'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    },
-    {
-      id: 222,
-      nameEn: 'amir',
-      nameAr: 'امير'
-    }]
-  constructor() { }
+  @ViewChild('form', { static: true }) form: any;
 
-  ngOnInit() {
+  url = 'product';
+  constructor(public sharedService: SharedService, public modalController: ModalController) {
+    super(sharedService);
   }
-  addProduct(from) {
-    console.log(from);
-  }
-  editProduct(product){
-    console.log(product);
-  }
-  deleteProduct(product){
-    console.log(product);
-  }
-  searchProduct(){
+  async openEditModal(item) {
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'data': item,
+        'title': 'Edit Product'
+      }
+    });
+    await modal.present();
+    const data = await modal.onWillDismiss();
+    this.editItem(data.data.data);
+    console.log(data.data.data);
 
-  }
-  loadData(event) {
-    setTimeout(() => {
-      console.log('Done');
-      event.target.complete();
-      this.pageNumber++;
-      // this.products.push(this.products[0]);
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      // if (data.length == 1000) {
-      //   event.target.disabled = true;
-      // }
-    }, 500);
-  }
-
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
 }

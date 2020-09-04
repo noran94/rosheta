@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AdminGaurdService } from './services/admin-gaurd.service';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -20,12 +17,20 @@ const routes: Routes = [
     loadChildren: () => import('./components/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'products',
-    loadChildren: () => import('./components/admin/products/products.module').then( m => m.ProductsPageModule)
+    path: 'home',
+    loadChildren: () => import('./components/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'categories',
-    loadChildren: () => import('./components/admin/category/category.module').then( m => m.CategoryPageModule)
+    path: 'pharmacy',
+    loadChildren: () => import('./components/pharmacy/pharmacy-home/pharmacy-home.module').then( m => m.PharmacyHomePageModule)
+  },
+  {
+    path: 'client',
+    loadChildren: () => import('./components/client/client-home/client-home.module').then( m => m.ClientHomePageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./components/admin/admin-home/admin-home.module').then( m => m.AdminHomePageModule)
   }
 ];
 
