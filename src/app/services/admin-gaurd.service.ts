@@ -1,22 +1,23 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { UserService } from './user.service';
+import {Injectable} from '@angular/core';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
+import {UserService} from './user.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AdminGaurdService implements CanActivate {
- 
-  constructor(private userService: UserService,
-    private router: Router) { }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-    if (!this.userService.getCurrentUser()) {
-      this.router.navigate['login'];
-      return false;
+    constructor(private userService: UserService,
+                private router: Router) {
     }
-    return this.userService.isAdmin();
-  }
+
+    canActivate(
+        next: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot): boolean {
+        if (!this.userService.getCurrentUser()) {
+            this.router.navigate['login'];
+            return false;
+        }
+        return this.userService.isAdmin();
+    }
 }

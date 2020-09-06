@@ -8,6 +8,9 @@ import { SharedService } from './shared.service';
 export class CategoriesService {
   url = 'category';
 
-  constructor(private http: HttpClient, private sharedService: SharedService) { }
+  constructor(private http: HttpClient) { }
 
+  listSimpleCategories() {
+    return this.http.get(this.url + '/simple-categories');
+  }
 }

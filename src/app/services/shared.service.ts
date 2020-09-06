@@ -34,7 +34,7 @@ export class SharedService {
     getFilter(formValue) {
         let params = new HttpParams();
         for (const key in formValue) {
-            if (formValue[key] && formValue[key] !== '') {
+            if (formValue[key] !== undefined && formValue[key] !== null && formValue[key] !== '') {
                 params = params.set(key, formValue[key]);
             }
         }

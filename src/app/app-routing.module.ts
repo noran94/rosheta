@@ -34,6 +34,7 @@ const routes: Routes = [
     path: 'admin', canActivate: [AdminGaurdService],
     loadChildren: () => import('./components/admin/admin-home/admin-home.module').then( m => m.AdminHomePageModule)
   }
+
 ];
 
 @NgModule({
