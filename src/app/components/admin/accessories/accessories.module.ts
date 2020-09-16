@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { AccessoriesPageRoutingModule } from './accessories-routing.module';
 
 import { AccessoriesPage } from './accessories.page';
+import {SearchPageModule} from '../../shared/search/search.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    AccessoriesPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        AccessoriesPageRoutingModule,
+        SearchPageModule
+    ],
   declarations: [AccessoriesPage]
 })
 export class AccessoriesPageModule {}

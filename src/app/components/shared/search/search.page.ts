@@ -8,8 +8,10 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild
 export class SearchPage implements AfterViewInit {
 
     @Input() inputs;
+    @Input() isAdd = false;
     @ViewChild('form', {static: true}) form: any;
     @Output() onSearch = new EventEmitter();
+    @Output() onAdd = new EventEmitter();
     @Output() onFormInitialized = new EventEmitter();
     isHidden = true;
 
@@ -34,4 +36,9 @@ export class SearchPage implements AfterViewInit {
         this.form.form.controls[controlName].reset();
     }
 
+    add() {
+        if (this.form.valid) {
+            this.onAdd.emit(this.form);
+        }
+    }
 }

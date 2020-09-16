@@ -1,13 +1,13 @@
     <ion-icon name="search" color="primary" (click)="isHidden=!isHidden"></ion-icon>
 
-<form #form="ngForm" (ngSubmit)="search()" [hidden]="isHidden">
+<form #form="ngForm" [hidden]="isHidden" (ngSubmit)="add()">
     <ion-row color="primary" class="ion-justify-content-center ion-margin-top">
         <ion-col size-md="12" size-lg="12" size-xs="12">
             <ion-item *ngFor="let item of inputs">
                 <ion-label color="primary">{{item.name}}</ion-label>
-                <ion-input [name]="item.name" type="text" *ngIf="item.type==='text'"
-                           ngModel></ion-input>
-                <ion-select interface="action-sheet" [name]="item.key" ngModel *ngIf="item.type==='select'"
+                <ion-input [name]="item.key" type="text" *ngIf="item.type==='text'"
+                           ngModel required></ion-input>
+                <ion-select interface="action-sheet" [name]="item.key" [(ngModel)]="item.defaultValue" *ngIf="item.type==='select'"
                             (ionChange)="item.callback()" (ionCancel)="resetValue(item.key)">
                     <ion-select-option *ngFor="let option of item.options"
                                        [value]="option.id">{{option['nameEn']}}</ion-select-option>
@@ -15,8 +15,11 @@
             </ion-item>
         </ion-col>
         <ion-col size-md="2" size-lg="2" size-xs="4">
-
-            <ion-button size="default" type="submit" color="success">Search
+            <ion-button size="default" type="button" color="success" (click)="search()">Search
+            </ion-button>
+        </ion-col>
+        <ion-col size-md="2" size-lg="2" size-xs="4" *ngIf="isAdd">
+            <ion-button size="default" type="submit" color="primary" [disabled]="form.invalid">Add
             </ion-button>
         </ion-col>
         <ion-col size-md="2" size-lg="2" size-xs="4">

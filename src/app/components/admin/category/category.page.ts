@@ -10,10 +10,16 @@ import {ModalComponent} from '../../shared/modal/modal.component';
     styleUrls: ['./category.page.scss'],
 })
 export class CategoryPage extends Shared {
-    @ViewChild('form', {static: true}) form: any;
-
     url = 'category';
-
+    searchInputs = [{
+        name: 'name En',
+        key: 'nameEn',
+        type: 'text'
+    }, {
+        name: 'name Ar',
+        key: 'nameAr',
+        type: 'text'
+    }];
     constructor(public sharedService: SharedService, public modalController: ModalController) {
         super(sharedService);
     }

@@ -13,7 +13,15 @@ export class ProductsPage extends Shared {
     @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
     url = 'product';
-
+    searchInputs = [{
+        name: 'name En',
+        key: 'nameEn',
+        type: 'text'
+    }, {
+        name: 'name Ar',
+        key: 'nameAr',
+        type: 'text'
+    }];
     constructor(public sharedService: SharedService, public modalController: ModalController) {
         super(sharedService);
     }
