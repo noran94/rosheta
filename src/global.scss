@@ -42,3 +42,8 @@
 .row:last-child .col {
     border-bottom: solid 1px grey;
 }
+
+.ion-margin-top-min {
+    --margin-top: var(--ion-margin, 8px);
+    margin-top: var(--ion-margin, 8px);
+}

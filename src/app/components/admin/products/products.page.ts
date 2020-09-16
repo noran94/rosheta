@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonInfiniteScroll, ModalController} from '@ionic/angular';
 import {SharedService} from 'src/app/services/shared.service';
 import {Shared} from '../../sharedComponent';
-import {ModalPage} from '../../shared/modal/modal.page';
+import {ModalComponent} from '../../shared/modal/modal.component';
 
 @Component({
     selector: 'app-products',
@@ -11,7 +11,6 @@ import {ModalPage} from '../../shared/modal/modal.page';
 })
 export class ProductsPage extends Shared {
     @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-    @ViewChild('form', {static: true}) form: any;
 
     url = 'product';
 
@@ -21,7 +20,7 @@ export class ProductsPage extends Shared {
 
     async openEditModal(item) {
         const modal = await this.modalController.create({
-            component: ModalPage,
+            component: ModalComponent,
             cssClass: 'my-custom-class',
             componentProps: {
                 data: item,

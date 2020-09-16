@@ -1,6 +1,6 @@
 <ion-content>
   <div class="contentStyle">
-    <form #form="ngForm" (ngSubmit)="register(form)">
+    <form #form="ngForm" (ngSubmit)="register()">
       <ion-grid>
         <ion-row color="primary" class="ion-justify-content-center">
           <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -12,16 +12,44 @@
                 <ion-input name="name" type="text" placeholder="Name" ngModel required></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+                <ion-input name="mobile" type="text" placeholder="mobile number" ngModel required></ion-input>
               </ion-item>
               <ion-item>
                 <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+                <ion-icon  name="help-circle" tooltip="I'm a tooltip below a button" positionV="top"></ion-icon>
               </ion-item>
               <ion-item>
                 <ion-input name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="mobile" type="text" placeholder="mobile number" ngModel required></ion-input>
+                <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Governorate</ion-label>
+                <ion-select interface="action-sheet" name="governorateId" ngModel required
+                            (ionChange)="listDistricts()" (ionCancel)="resetValue('governorateId')">
+                  <ion-select-option *ngFor="let governorate of governorates"
+                                     [value]="governorate.id">{{governorate.nameEn}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label>District</ion-label>
+                <ion-select interface="action-sheet" name="districtId" ngModel required
+                            (ionCancel)="resetValue('districtId')">
+                  <ion-select-option *ngFor="let district of districts"
+                                     [value]="district.id">{{district.nameEn}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-input name="address" type="text" placeholder="Address" ngModel required></ion-input>
+              </ion-item>
+              <ion-item *ngIf="type === 2">
+                <ion-label>Restricted to District</ion-label>
+                <ion-select interface="action-sheet" name="restrictToDistrict" [(ngModel)]="defaultValue" required
+                            (ionCancel)="resetValue('restrictToDistrict')">
+                  <ion-select-option [value]="true">Yes</ion-select-option>
+                  <ion-select-option [value]="false">No</ion-select-option>
+                </ion-select>
               </ion-item>
             </div>
             <div padding>

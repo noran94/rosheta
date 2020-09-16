@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {SharedService} from 'src/app/services/shared.service';
 import {Shared} from '../../sharedComponent';
-import {ModalPage} from '../../shared/modal/modal.page';
+import {ModalComponent} from '../../shared/modal/modal.component';
 
 @Component({
     selector: 'app-category',
@@ -20,7 +20,7 @@ export class CategoryPage extends Shared {
 
     async openEditModal(item) {
         const modal = await this.modalController.create({
-            component: ModalPage,
+            component: ModalComponent,
             cssClass: 'my-custom-class',
             componentProps: {
                 data: item,
@@ -29,6 +29,8 @@ export class CategoryPage extends Shared {
         });
         await modal.present();
         const data = await modal.onWillDismiss();
-        this.editItem(data.data.data);
+        if (data.data) {
+            this.editItem(data.data.data);
+        }
     }
 }

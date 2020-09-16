@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Shared} from '../../sharedComponent';
 import {SharedService} from '../../../services/shared.service';
-import {CategoriesService} from '../../../services/categories.service';
+import {LookupsService} from '../../../services/lookups.service';
 
 @Component({
     selector: 'app-accessories',
@@ -13,12 +13,12 @@ export class AccessoriesPage extends Shared {
     url = 'accessory';
     categories;
 
-    constructor(public sharedService: SharedService, private categoryService: CategoriesService) {
+    constructor(public sharedService: SharedService, private lookupsService: LookupsService) {
         super(sharedService);
     }
 
     customOnInit() {
-        this.categoryService.listSimpleCategories().subscribe(categories => {
+        this.lookupsService.listCategories().subscribe(categories => {
             this.categories = categories;
         });
     }

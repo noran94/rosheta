@@ -1,6 +1,9 @@
 {
   "name": "roshta",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
   "type": "angular",
   "id": "4f6cd91b"
 }

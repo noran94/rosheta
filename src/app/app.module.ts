@@ -14,6 +14,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { InterceptorService } from './services/interceptor.service';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { UserService } from './services/user.service';
+import {TooltipsModule} from 'ionic4-tooltips';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ModalComponent} from './components/shared/modal/modal.component';
+import {FormsModule} from '@angular/forms';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -32,11 +36,14 @@ export function initApp(userService: UserService, storage: Storage) {
 }
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, ModalComponent],
     entryComponents: [],
     imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
         IonicStorageModule.forRoot(),
         HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        TooltipsModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -48,8 +55,8 @@ export function initApp(userService: UserService, storage: Storage) {
         StatusBar,
         SplashScreen,
         UserService,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
         {
             provide: APP_INITIALIZER,
             useFactory: initApp,
@@ -57,6 +64,8 @@ export function initApp(userService: UserService, storage: Storage) {
             deps: [UserService, Storage]
         }
 
+    ],
+    exports: [
     ],
     bootstrap: [AppComponent]
 })

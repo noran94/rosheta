@@ -1,6 +1,6 @@
-import { OnInit, ViewChild } from '@angular/core';
-import { SharedService } from '../services/shared.service';
-import { IonInfiniteScroll } from '@ionic/angular';
+import {OnInit, ViewChild} from '@angular/core';
+import {SharedService} from '../services/shared.service';
+import {IonInfiniteScroll, ToastController} from '@ionic/angular';
 
 export abstract class Shared implements OnInit {
     list;
@@ -8,7 +8,8 @@ export abstract class Shared implements OnInit {
     isList = true;
     abstract url;
     id;
-    abstract form;
+    initFilter = {};
+    @ViewChild('form', {static: true}) form: any;
     @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
     constructor(public sharedService: SharedService) {
@@ -23,7 +24,8 @@ export abstract class Shared implements OnInit {
     }
 
     listItems(event?) {
-        this.sharedService.listItems(this.form.value, this.url).subscribe((data: any) => {
+        const filter = Object.assign(this.initFilter, this.form ? this.form.value : {});
+        this.sharedService.listItems(filter, this.url).subscribe((data: any) => {
             if (event) {
                 this.list.push(...data.data);
                 this.infiniteScroll.complete();
@@ -38,37 +40,50 @@ export abstract class Shared implements OnInit {
         });
     }
 
-    addItem(reload?) {
-        this.sharedService.addItem(this.form.value, this.url).subscribe((data) => {
+    async addItem(reload?, customRequest?) {
+        const filter = Object.assign(this.initFilter, customRequest ? customRequest : this.form.value);
+        return await this.sharedService.addItem(filter, this.url).toPromise().then(() => {
             this.form.reset();
             if (reload) {
                 this.searchItem();
             }
+            this.sharedService.successToast();
+            return false;
+        }, (error) => {
+            this.sharedService.errorToast(error.error.message);
+            return error;
         });
     }
 
     editItem(modal?) {
-        let data = modal ? modal : this.form.value;
-        this.sharedService.editItem(data, this.url).subscribe((data) => {
+        const data = modal ? modal : this.form.value;
+        const filter = Object.assign(this.initFilter, data);
+        this.sharedService.editItem(filter, this.url).subscribe(() => {
             if (modal) {
                 this.searchItem();
             }
+            this.sharedService.successToast();
+        }, (error) => {
+            this.sharedService.errorToast(error.error.message);
         });
     }
 
     deleteItem(id?) {
-        let data = id ? id : this.id;
-        this.sharedService.deleteItem(data, this.url).subscribe((data) => {
+        const data = id ? id : this.id;
+        this.sharedService.deleteItem(data, this.url).subscribe(() => {
             this.searchItem();
+            this.sharedService.successToast();
+        }, (error) => {
+            this.sharedService.errorToast(error.error.message);
         });
     }
 
-    searchItem() {
+    searchItem(form?) {
+        this.form = form;
         this.disabledLoading = false;
         this.list = [];
         this.sharedService.pageNumber = 0;
         this.listItems();
-
     }
 
     getItem() {
@@ -86,5 +101,10 @@ export abstract class Shared implements OnInit {
         this.listItems(true);
     }
 
-    customOnInit() { }
+    resetValue(controlName) {
+        this.form.form.controls[controlName].reset();
+    }
+
+    customOnInit() {
+    }
 }
