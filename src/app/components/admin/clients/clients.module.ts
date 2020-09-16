@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ClientsPageRoutingModule } from './clients-routing.module';
 
 import { ClientsPage } from './clients.page';
+import { HeaderPageModule } from '../../shared/header/header.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ClientsPageRoutingModule
+    ClientsPageRoutingModule,
+    HeaderPageModule
   ],
   declarations: [ClientsPage]
 })

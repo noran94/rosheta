@@ -1,15 +1,12 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>Pharmacies</ion-title>
-    </ion-toolbar>
-</ion-header>
+<app-header [headerName]="'Pharmacies'"></app-header>
+
 
 <ion-content>
     <div class="scroll" padding>
         <app-search [inputs]="searchInputs" (onSearch)="searchItem($event)"
                     (onFormInitialized)="initForm($event)"></app-search>
         <ion-grid>
-            <ion-row color="primary" class="ion-justify-content-between ion-margin-top">
+            <ion-row color="primary" class="ion-justify-content-between">
                 <ion-col size-md="3" size-lg="3" size-xs="12" *ngFor="let item of list">
                     <ion-card>
                         <ion-card-content>

@@ -1,43 +1,50 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
-</ion-header>
+
+<app-header [headerName]="'Home'"></app-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-content routerLink="/admin/products" routerDirection="root">
-      Products
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content routerLink="/admin/categories" routerDirection="root">
-      Categories
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content routerLink="/admin/accessories" routerDirection="root">
-      Accessories
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content routerLink="/admin/pharmacies" routerDirection="root">
-      Pharmacies
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content routerLink="/admin/clients" routerDirection="root">
-      Clients
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content routerLink="/admin/requests" routerDirection="root">
-      Requests
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content routerLink="/admin/monthly-report" routerDirection="root">
-      Monthly Reports
-    </ion-card-content>
-  </ion-card>
+  <ion-row>
+    <ion-col size="6">
+      <ion-card>
+        <ion-card-content class="card-content" routerLink="/admin/products" routerDirection="root">
+          Products
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content class="card-content" routerLink="/admin/categories" routerDirection="root">
+          Categories
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content class="card-content" routerLink="/admin/accessories" routerDirection="root">
+          Accessories
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="6">
+      <ion-card>
+        <ion-card-content class="card-content" routerLink="/admin/clients" routerDirection="root">
+          Clients
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content class="card-content" routerLink="/admin/requests" routerDirection="root">
+          Requests
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content class="card-content" routerLink="/admin/pharmacies" routerDirection="root">
+          Pharmacies
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-card>
+        <ion-card-content class="card-content" routerLink="/admin/monthly-report" routerDirection="root">
+          Monthly Reports
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
 </ion-content>

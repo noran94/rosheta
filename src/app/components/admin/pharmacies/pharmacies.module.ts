@@ -8,6 +8,7 @@ import { PharmaciesPageRoutingModule } from './pharmacies-routing.module';
 
 import { PharmaciesPage } from './pharmacies.page';
 import {SearchPageModule} from '../../shared/search/search.module';
+import { HeaderPageModule } from '../../shared/header/header.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {SearchPageModule} from '../../shared/search/search.module';
     FormsModule,
     IonicModule,
     PharmaciesPageRoutingModule,
-    SearchPageModule
+    SearchPageModule,
+    HeaderPageModule
   ],
   declarations: [PharmaciesPage]
 })

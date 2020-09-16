@@ -33,10 +33,19 @@ const routes: Routes = [
   {
     path: 'admin', canActivate: [AdminGaurdService],
     loadChildren: () => import('./components/admin/admin-home/admin-home.module').then( m => m.AdminHomePageModule)
-  },  {
+  },
+  {
     path: 'search',
     loadChildren: () => import('./components/shared/search/search.module').then( m => m.SearchPageModule)
+  },  {
+    path: 'header',
+    loadChildren: () => import('./components/shared/header/header.module').then( m => m.HeaderPageModule)
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./components/shared/menu/menu.module').then( m => m.MenuPageModule)
   }
+
 
 ];
 
