@@ -8,6 +8,8 @@ import { ProductsPageRoutingModule } from './products-routing.module';
 
 import { ProductsPage } from './products.page';
 import { HeaderPageModule } from '../../shared/header/header.module';
+import { SearchPageModule } from '../../shared/search/search.module';
+
 
 @NgModule({
   imports: [
@@ -15,8 +17,9 @@ import { HeaderPageModule } from '../../shared/header/header.module';
     FormsModule,
     IonicModule,
     ProductsPageRoutingModule,
-    HeaderPageModule
+    HeaderPageModule,
+    SearchPageModule
   ],
   declarations: [ProductsPage]
 })
-export class ProductsPageModule {}
+export class ProductsPageModule { }

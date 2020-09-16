@@ -9,17 +9,34 @@ import {LookupsService} from '../../../services/lookups.service';
     styleUrls: ['./accessories.page.scss'],
 })
 export class AccessoriesPage extends Shared {
-    @ViewChild('form', {static: true}) form: any;
     url = 'accessory';
-    categories;
-
+    categories = [];
+    searchInputs = [{
+        name: 'name En',
+        key: 'nameEn',
+        type: 'text'
+    }, {
+        name: 'name Ar',
+        key: 'nameAr',
+        type: 'text'
+    }, {
+        name: 'Category',
+        key: 'categoryId',
+        type: 'select',
+        options: this.categories
+    }, {
+        name: 'On Sale',
+        key: 'sale',
+        type: 'select',
+        options: [{id: true, nameEn: 'Yes'}, {id: false, nameEn: 'No'}]
+    }];
     constructor(public sharedService: SharedService, private lookupsService: LookupsService) {
         super(sharedService);
     }
 
     customOnInit() {
-        this.lookupsService.listCategories().subscribe(categories => {
-            this.categories = categories;
+        this.lookupsService.listCategories().subscribe((categories: any) => {
+            this.categories.push(...categories);
         });
     }
 

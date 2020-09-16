@@ -78,8 +78,7 @@ export abstract class Shared implements OnInit {
         });
     }
 
-    searchItem(form?) {
-        this.form = form;
+    searchItem() {
         this.disabledLoading = false;
         this.list = [];
         this.sharedService.pageNumber = 0;

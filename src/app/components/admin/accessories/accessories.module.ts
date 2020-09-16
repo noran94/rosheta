@@ -8,6 +8,7 @@ import { AccessoriesPageRoutingModule } from './accessories-routing.module';
 
 import { AccessoriesPage } from './accessories.page';
 import { HeaderPageModule } from '../../shared/header/header.module';
+import { SearchPageModule } from '../../shared/search/search.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,9 @@ import { HeaderPageModule } from '../../shared/header/header.module';
     FormsModule,
     IonicModule,
     AccessoriesPageRoutingModule,
-    HeaderPageModule
+    HeaderPageModule,
+    SearchPageModule
   ],
   declarations: [AccessoriesPage]
 })
-export class AccessoriesPageModule {}
+export class AccessoriesPageModule { }

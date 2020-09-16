@@ -8,6 +8,7 @@ import { CategoryPageRoutingModule } from './category-routing.module';
 
 import { CategoryPage } from './category.page';
 import { HeaderPageModule } from '../../shared/header/header.module';
+import { SearchPageModule } from '../../shared/search/search.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,9 @@ import { HeaderPageModule } from '../../shared/header/header.module';
     FormsModule,
     IonicModule,
     CategoryPageRoutingModule,
-    HeaderPageModule
+    HeaderPageModule,
+    SearchPageModule
   ],
   declarations: [CategoryPage]
 })
-export class CategoryPageModule {}
+export class CategoryPageModule { }

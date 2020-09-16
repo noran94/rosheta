@@ -8,6 +8,7 @@ import { ClientsPageRoutingModule } from './clients-routing.module';
 
 import { ClientsPage } from './clients.page';
 import { HeaderPageModule } from '../../shared/header/header.module';
+import { SearchPageModule } from '../../shared/search/search.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,9 @@ import { HeaderPageModule } from '../../shared/header/header.module';
     FormsModule,
     IonicModule,
     ClientsPageRoutingModule,
-    HeaderPageModule
+    HeaderPageModule,
+    SearchPageModule
   ],
   declarations: [ClientsPage]
 })
-export class ClientsPageModule {}
+export class ClientsPageModule { }

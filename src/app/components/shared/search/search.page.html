@@ -1,11 +1,9 @@
-<!-- <ion-icon name="search" color="primary" (click)="isHidden=!isHidden"></ion-icon> -->
 <ion-row class="filter">
     <ion-col (click)="isHidden=!isHidden" class="search" offset="6" size="5">
         <ion-icon name="filter-outline"></ion-icon>
         <ion-label> Filter Results</ion-label>
     </ion-col>
 </ion-row>
-
 <form #form="ngForm" class="search-form" (ngSubmit)="search()" [hidden]="isHidden">
     <ion-row color="primary" class="ion-justify-content-center">
         <ion-col size-md="12" size-lg="12" size-xs="12">
@@ -20,8 +18,7 @@
             </ion-item>
         </ion-col>
         <ion-col size-md="2" size-lg="2" size-xs="4">
-
-            <ion-button size="default" type="submit" color="success">Search
+            <ion-button size="default" type="button" color="success" (click)="search()">Search
             </ion-button>
         </ion-col>
         <ion-col size-md="2" size-lg="2" size-xs="4">
