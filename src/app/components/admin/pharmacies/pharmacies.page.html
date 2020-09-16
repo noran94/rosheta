@@ -6,61 +6,8 @@
 
 <ion-content>
     <div class="scroll" padding>
-<!--        <form #form="ngForm">-->
-<!--            <ion-row color="primary" class="ion-justify-content-center ion-margin-top">-->
-<!--                <ion-col size-md="3" size-lg="3" size-xs="12">-->
-<!--                    <ion-item>-->
-<!--                        <ion-input name="name" type="text" placeholder="Name" ngModel></ion-input>-->
-<!--                    </ion-item>-->
-<!--                </ion-col>-->
-<!--                <ion-col size-md="3" size-lg="3" size-xs="12">-->
-<!--                    <ion-item>-->
-<!--                        <ion-label color="primary">Governorate</ion-label>-->
-<!--                        <ion-select interface="action-sheet" name="governorateId" ngModel-->
-<!--                                    (ionChange)="listDistricts()" (ionCancel)="resetValue('governorateId')">-->
-<!--                            <ion-select-option *ngFor="let governorate of governorates"-->
-<!--                                               [value]="governorate.id">{{governorate.nameEn}}</ion-select-option>-->
-<!--                        </ion-select>-->
-<!--                    </ion-item>-->
-<!--                </ion-col>-->
-<!--                <ion-col size-md="3" size-lg="3" size-xs="12">-->
-<!--                    <ion-item>-->
-<!--                        <ion-label color="primary">District</ion-label>-->
-<!--                        <ion-select interface="action-sheet" name="districtId" ngModel-->
-<!--                                    (ionCancel)="resetValue('districtId')">-->
-<!--                            <ion-select-option *ngFor="let district of districts"-->
-<!--                                               [value]="district.id">{{district.nameEn}}</ion-select-option>-->
-<!--                        </ion-select>-->
-<!--                    </ion-item>-->
-<!--                </ion-col>-->
-<!--                <ion-col size-md="3" size-lg="3" size-xs="12">-->
-<!--                    <ion-item>-->
-<!--                        <ion-label color="primary">Disabled Requests</ion-label>-->
-<!--                        <ion-select interface="action-sheet" name="disableRequests" ngModel-->
-<!--                                    (ionCancel)="resetValue('disableRequests')">-->
-<!--                            <ion-select-option [value]="true">Yes</ion-select-option>-->
-<!--                            <ion-select-option [value]="false">No</ion-select-option>-->
-<!--                        </ion-select>-->
-<!--                    </ion-item>-->
-<!--                </ion-col>-->
-<!--                <ion-col size-md="3" size-lg="3" size-xs="12">-->
-<!--                    <ion-item>-->
-<!--                        <ion-label color="primary">Restricted to District</ion-label>-->
-<!--                        <ion-select interface="action-sheet" name="restrictToDistrict" ngModel-->
-<!--                                    (ionCancel)="resetValue('restrictToDistrict')">-->
-<!--                            <ion-select-option [value]="true">Yes</ion-select-option>-->
-<!--                            <ion-select-option [value]="false">No</ion-select-option>-->
-<!--                        </ion-select>-->
-<!--                    </ion-item>-->
-<!--                </ion-col>-->
-<!--                <ion-col size-md="2" size-lg="2" size-xs="4">-->
-<!--                    <ion-button size="default" (click)="searchItem()" type="button" color="primary" expand="block">-->
-<!--                        Search-->
-<!--                    </ion-button>-->
-<!--                </ion-col>-->
-<!--            </ion-row>-->
-<!--        </form>-->
-        <app-search [inputs]="searchInputs" (onSearch)="searchItem($event)"></app-search>
+        <app-search [inputs]="searchInputs" (onSearch)="searchItem($event)"
+                    (onFormInitialized)="initForm($event)"></app-search>
         <ion-grid>
             <ion-row color="primary" class="ion-justify-content-between ion-margin-top">
                 <ion-col size-md="3" size-lg="3" size-xs="12" *ngFor="let item of list">

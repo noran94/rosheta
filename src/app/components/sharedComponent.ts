@@ -105,6 +105,10 @@ export abstract class Shared implements OnInit {
         this.form.form.controls[controlName].reset();
     }
 
+    initForm(form: any) {
+        this.form = form;
+    }
+
     customOnInit() {
     }
 }

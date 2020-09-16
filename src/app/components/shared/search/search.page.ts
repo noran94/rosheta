@@ -1,21 +1,23 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 @Component({
     selector: 'app-search',
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
 })
-export class SearchPage implements OnInit {
+export class SearchPage implements AfterViewInit {
 
     @Input() inputs;
     @ViewChild('form', {static: true}) form: any;
     @Output() onSearch = new EventEmitter();
+    @Output() onFormInitialized = new EventEmitter();
     isHidden = true;
 
     constructor() {
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
+        this.onFormInitialized.emit(this.form);
     }
 
     clear() {
