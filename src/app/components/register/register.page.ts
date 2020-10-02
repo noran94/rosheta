@@ -4,7 +4,8 @@ import {SharedService} from '../../services/shared.service';
 import {LookupsService} from '../../services/lookups.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions} from '@ionic-native/native-geocoder/ngx';
+import {NativeGeocoder, NativeGeocoderResult} from '@ionic-native/native-geocoder/ngx';
+import {Platform} from '@ionic/angular';
 
 @Component({
     selector: 'app-register',
@@ -16,47 +17,25 @@ export class RegisterPage extends Shared {
     url = 'user';
     governorates;
     districts;
+    isList = false;
     defaultValue = true;
     type;
-    lat = 0;
-    lng = 0;
-    options: NativeGeocoderOptions = {
-        useLocale: true,
-        maxResults: 5
-    };
-    msg;
+    isCurrentAddress = true;
 
     constructor(public sharedService: SharedService,
                 private lookupsService: LookupsService,
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
-                private geolocation: Geolocation,
-                private nativeGeocoder: NativeGeocoder) {
-        super(sharedService);
+                public geolocation: Geolocation,
+                public nativeGeocoder: NativeGeocoder,
+                public platform: Platform) {
+        super(sharedService, geolocation, nativeGeocoder, platform);
     }
 
     customOnInit() {
         this.type = +this.activatedRoute.snapshot.paramMap.get('id');
-        this.lookupsService.listGovernorates().subscribe(governorates => {
-            this.governorates = governorates;
-        });
-        this.geolocation.getCurrentPosition().then((resp) => {
-            this.lat = resp.coords.latitude;
-            this.lng = resp.coords.longitude;
-            console.log(this.lat, this.lng);
-            this.nativeGeocoder.reverseGeocode(this.lat, this.lng, this.options)
-                .then((result: NativeGeocoderResult[]) => {
-                    console.log(JSON.stringify(result[0]));
-                    this.msg = JSON.stringify(result[0]);
-                })
-                .catch((error: any) => console.log(error));
-
-            this.nativeGeocoder.forwardGeocode('Berlin', this.options)
-                .then((result: NativeGeocoderResult[]) => console.log('The coordinates are latitude=' + result[0].latitude + ' and longitude=' + result[0].longitude))
-                .catch((error: any) => console.log(error));
-        }).catch((error) => {
-            console.log('Error getting location', error);
-        });
+        this.governorates = this.lookupsService.governorates;
+        this.getCurrentLocation();
     }
 
     listDistricts() {
@@ -83,8 +62,8 @@ export class RegisterPage extends Shared {
             extraInfo: request.address,
             districtId: request.districtId,
             governorateId: request.governorateId,
-            lat: 0,
-            lng: 0
+            lat: this.lat,
+            lng: this.lng
         }];
         request.roleId = this.type;
         request.language = 'en';
@@ -100,5 +79,9 @@ export class RegisterPage extends Shared {
                 this.router.navigate(['login']);
             }
         });
+    }
+
+    resetAddress() {
+        this.form.form.get('address').setValue(this.isCurrentAddress ? this.address : '');
     }
 }

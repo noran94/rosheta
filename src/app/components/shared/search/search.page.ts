@@ -1,4 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ModalComponent} from '../modal/modal.component';
+import {ModalController} from '@ionic/angular';
 
 @Component({
     selector: 'app-search',
@@ -6,8 +8,8 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild
     styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements AfterViewInit {
-
     @Input() inputs;
+    @Input() addLabel;
     @Input() isAdd = false;
     @ViewChild('form', {static: true}) form: any;
     @Output() onSearch = new EventEmitter();
@@ -15,7 +17,7 @@ export class SearchPage implements AfterViewInit {
     @Output() onFormInitialized = new EventEmitter();
     isHidden = true;
 
-    constructor() {
+    constructor(private modalController: ModalController) {
     }
 
     ngAfterViewInit() {
@@ -36,9 +38,21 @@ export class SearchPage implements AfterViewInit {
         this.form.form.controls[controlName].reset();
     }
 
-    add() {
-        if (this.form.valid) {
-            this.onAdd.emit(this.form);
+    async openAddModal() {
+        const modal = await this.modalController.create({
+            component: ModalComponent,
+            cssClass: 'my-custom-class',
+            componentProps: {
+                inputs: this.inputs,
+                title: 'Add ' + this.addLabel
+            }
+        });
+        await modal.present();
+        const data = await modal.onWillDismiss();
+        if (data.data) {
+            this.form.form.patchValue(data.data.data);
+            this.onAdd.emit(true);
         }
     }
+
 }

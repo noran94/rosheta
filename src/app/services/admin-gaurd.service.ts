@@ -15,7 +15,7 @@ export class AdminGaurdService implements CanActivate {
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean {
         if (!this.userService.getCurrentUser()) {
-            this.router.navigate['login'];
+            this.router.navigate(['login']);
             return false;
         }
         return this.userService.isAdmin();

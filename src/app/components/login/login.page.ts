@@ -28,10 +28,19 @@ export class LoginPage implements OnInit {
             this.storage.set('user', data.body);
             this.userService.setUser(data.body);
             this.sharedService.successToast('Logged in Sucessfully');
-            this.router.navigate(['home']);
+            this.navigate();
         }, (error) => {
             this.sharedService.errorToast(error.error.message);
         });
     }
 
+    private navigate() {
+        if (this.userService.isAdmin()) {
+            this.router.navigate(['admin']);
+        } else if (this.userService.isClient()) {
+            this.router.navigate(['client']);
+        } else if (this.userService.isPharmacy()) {
+            this.router.navigate(['pharmacy']);
+        }
+    }
 }

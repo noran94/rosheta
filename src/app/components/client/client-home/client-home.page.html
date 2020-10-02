@@ -1,6 +1,10 @@
-<app-header [headerName]="'client-home'"></app-header>
-
+<app-header [headerName]="'Home'" [disableBack]="true"></app-header>
 
 <ion-content>
+    <ion-fab class="ion-margin-top" horizontal="center">
+        <ion-fab-button routerLink="/client/make-order" routerDirection="root">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 </ion-content>

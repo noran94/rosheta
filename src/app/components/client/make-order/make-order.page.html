@@ -1,0 +1,59 @@
+<app-header [headerName]="'Make Order'"></app-header>
+
+<ion-content>
+    <form #form="ngForm" (ngSubmit)="order()">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title color="primary">Address</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <ion-radio-group (ionChange)="mapValueToForm($event)" [value]="addresses[0].id">
+                        <ion-item *ngFor="let address of addresses">
+                            <ion-label>{{address.governorateNameEn + ' ' +
+                            address.districtNameEn + ' ' + (address.extraInfo ? address.extraInfo : '')}}</ion-label>
+                            <ion-radio slot="start" color="success" [value]="address.id"></ion-radio>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-button (click)="addAddress()" slot="end">Add Address</ion-button>
+                        </ion-item>
+                    </ion-radio-group>
+                </ion-list>
+
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title color="primary">Details</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-item>
+                    <ion-label color="primary">Products</ion-label>
+                    <ionic-selectable
+                            item-content
+                            name="products"
+                            itemValueField="nameEn"
+                            itemTextField="nameEn"
+                            [items]="products"
+                            ngModel
+                            [canSearch]="true"
+                            [canClear]="true"
+                            [isMultiple]="true">
+                    </ionic-selectable>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="primary">Extra Info</ion-label>
+                    <ion-textarea name="comment" ngModel></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-fab class="ion-margin-top" horizontal="center">
+                        <ion-fab-button>
+                            <ion-icon name="camera"></ion-icon>
+                        </ion-fab-button>
+                    </ion-fab>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+        <ion-button type="submit" slot="end">Order</ion-button>
+    </form>
+</ion-content>

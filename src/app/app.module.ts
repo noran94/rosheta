@@ -14,10 +14,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { InterceptorService } from './services/interceptor.service';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { UserService } from './services/user.service';
-import {TooltipsModule} from 'ionic4-tooltips';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ModalComponent} from './components/shared/modal/modal.component';
 import {FormsModule} from '@angular/forms';
+import {TooltipsModule} from 'ionic-tooltips';
 
 
 export function createTranslateLoader(http: HttpClient) {

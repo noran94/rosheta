@@ -2,17 +2,26 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 import { ADMIN_MENU, CLIENT_MENU, PHARMACY_MENU } from '../menu';
+import { Location } from '@angular/common';
+import {LoginService} from '../../../services/login.service';
+import {Router} from '@angular/router';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.page.html',
-  styleUrls: ['./header.page.scss'],
+  styleUrls: ['./header.page.scss']
 })
 export class HeaderPage implements OnInit {
 
   @Input() headerName;
+  @Input() disableBack;
   menuList;
-  constructor(private menu: MenuController, private user: UserService) { }
+  constructor(private menu: MenuController, private user: UserService,
+              private location: Location,
+              private router: Router,
+              private storage: Storage,
+              private loginService: LoginService) { }
 
   ngOnInit() {
     if (this.user.isAdmin()) {
@@ -26,23 +35,25 @@ export class HeaderPage implements OnInit {
     }
 
   }
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
 
-  openEnd() {
-    this.menu.open('end');
-  }
   closeMenu() {
     this.menu.close();
   }
 
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
-  }
   logout(){
-    console.log('here');
+    this.closeMenu();
+    this.loginService.logout().subscribe(() => {
+      this.storage.clear();
+      this.user.setUser(undefined);
+      this.router.navigate(['/login']);
+    }, () => {
+      this.storage.clear();
+      this.user.setUser(undefined);
+      this.router.navigate(['/login']);
+    });
+  }
+
+  back() {
+    this.location.back();
   }
 }

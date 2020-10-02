@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: PharmacyHomePage
+  },
+  {
+    path: 'order-details',
+    loadChildren: () => import('../../shared/order-details/order-details.module').then( m => m.OrderDetailsPageModule)
   }
 ];
 

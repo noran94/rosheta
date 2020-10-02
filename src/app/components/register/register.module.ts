@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
-import {TooltipsModule} from 'ionic4-tooltips';
+import {TooltipsModule} from 'ionic-tooltips';
 
 @NgModule({
     imports: [

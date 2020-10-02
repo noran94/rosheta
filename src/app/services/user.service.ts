@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { User } from '../models/user.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,8 @@ import { User } from '../models/user.model';
 export class UserService {
   private user: User;
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage,
+              private http: HttpClient) { }
 
   getUserFromStorage() {
     this.storage.get('user').then(user => {
@@ -18,6 +20,10 @@ export class UserService {
 
   setUser(user) {
     return this.user = user;
+  }
+
+  updateUserStorage(user) {
+    this.storage.set('user', user);
   }
 
   getCurrentUser() {
@@ -32,5 +38,9 @@ export class UserService {
   }
   isClient() {
     return  this.user.roleId === 3;
+  }
+
+  addAddress(address) {
+    return this.http.post('user/add-address', address);
   }
 }

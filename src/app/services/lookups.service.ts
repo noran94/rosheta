@@ -7,8 +7,12 @@ import {SharedService} from './shared.service';
 })
 export class LookupsService {
     url = 'lookups/';
+    products = [];
+    governorates = [];
 
     constructor(private http: HttpClient) {
+        this.listAllProducts();
+        this.listGovernorates();
     }
 
     listCategories() {
@@ -16,10 +20,18 @@ export class LookupsService {
     }
 
     listGovernorates() {
-        return this.http.get(this.url + 'governorates');
+        return this.http.get(this.url + 'governorates', {params: new HttpParams().set('disableLoader', 'true')}).subscribe((data: any) => {
+            this.governorates.push(...data);
+        });
     }
 
     listDistricts(governmentId: number) {
         return this.http.get(this.url + governmentId + '/districts');
+    }
+
+    listAllProducts() {
+        this.http.get(this.url + 'products', {params: new HttpParams().set('disableLoader', 'true')}).subscribe((data: any) => {
+            this.products.push(...data);
+        });
     }
 }

@@ -5,7 +5,7 @@ import {UserService} from './user.service';
 @Injectable({
     providedIn: 'root'
 })
-export class ClientGaurdService implements CanActivate {
+export class TypeGaurdService implements CanActivate {
 
     constructor(private userService: UserService,
                 private router: Router) {
@@ -15,9 +15,16 @@ export class ClientGaurdService implements CanActivate {
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean {
         if (!this.userService.getCurrentUser()) {
-            this.router.navigate(['login']);
-            return false;
+            return true;
         }
-        return this.userService.isClient();
+        if (this.userService.isClient()) {
+            this.router.navigate(['/client']);
+        }
+        if (this.userService.isAdmin()) {
+            this.router.navigate(['/admin']);
+        }
+        if (this.userService.isPharmacy()) {
+            this.router.navigate(['/pharmacy']);
+        }
     }
 }

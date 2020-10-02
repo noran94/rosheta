@@ -3,24 +3,21 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AdminGaurdService } from './services/admin-gaurd.service';
 import {ClientGaurdService} from './services/client-gaurd.service';
 import {PharmacyGaurdService} from './services/pharmacy-gaurd.service';
+import {TypeGaurdService} from './services/type-gaurd.service';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'login',
+    path: 'login', canActivate: [TypeGaurdService],
     loadChildren: () => import('./components/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'register/:id',
     loadChildren: () => import('./components/register/register.module').then( m => m.RegisterPageModule)
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./components/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'pharmacy', canActivate: [PharmacyGaurdService],
@@ -37,7 +34,8 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./components/shared/search/search.module').then( m => m.SearchPageModule)
-  },  {
+  },
+  {
     path: 'header',
     loadChildren: () => import('./components/shared/header/header.module').then( m => m.HeaderPageModule)
   },
@@ -45,6 +43,7 @@ const routes: Routes = [
     path: 'menu',
     loadChildren: () => import('./components/shared/menu/menu.module').then( m => m.MenuPageModule)
   }
+
 
 
 ];

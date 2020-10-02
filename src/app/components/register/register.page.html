@@ -16,7 +16,10 @@
               </ion-item>
               <ion-item>
                 <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
-                <ion-icon  name="help-circle" tooltip="I'm a tooltip below a button" positionV="top"></ion-icon>
+                <ion-icon  name="help-circle" tooltip="" mobileEvent="click"
+                           tooltipHtml="<div class='text-center'>Password must contains at least one
+                           <br> small & capital letter <br> special character (!@#$%^&*)
+                            <br> Number</div>" positionV="top" arrow></ion-icon>
               </ion-item>
               <ion-item>
                 <ion-input name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
@@ -41,7 +44,12 @@
                 </ion-select>
               </ion-item>
               <ion-item>
-                <ion-input name="address" type="text" placeholder="Address" ngModel required></ion-input>
+                <ion-label>Use Current Address</ion-label>
+                <ion-toggle [(ngModel)]="isCurrentAddress" name="isCurrentAddress" (ionChange)="resetAddress()"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-input [disabled]="isCurrentAddress" name="address" type="text" placeholder="Address" ngModel required
+                (ionChange)="getLatLng()"></ion-input>
               </ion-item>
               <ion-item *ngIf="type === 2">
                 <ion-label>Restricted to District</ion-label>

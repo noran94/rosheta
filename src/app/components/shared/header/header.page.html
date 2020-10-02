@@ -1,9 +1,10 @@
+<ion-router-outlet id="main"></ion-router-outlet>
 <ion-menu side="start" menuId="first" contentId="main">
   <ion-header>
     <ion-toolbar color="primary">
       <ion-row>
         <ion-title>Menu</ion-title>
-        <ion-icon class="close-icon" name="close-outline" (click)="closeMenu()"></ion-icon>
+        <ion-icon class="close-icon" name="close-outline " (click)="closeMenu()"></ion-icon>
       </ion-row>
     </ion-toolbar>
   </ion-header>
@@ -20,18 +21,14 @@
     </ion-list>
   </ion-content>
 </ion-menu>
-<ion-router-outlet id="main"></ion-router-outlet>
-<ion-header>
+<ion-header translucent>
   <ion-toolbar>
-    <ion-row>
-      <ion-col size="s" class="ion-align-self-start">
-        <ion-menu-button></ion-menu-button>
-      </ion-col>
-      <ion-col>
-        <ion-title class="title-text">{{headerName}}</ion-title>
-      </ion-col>
-      <ion-col>
-      </ion-col>
-    </ion-row>
+    <ion-buttons slot="start" *ngIf="!disableBack">
+      <ion-back-button (click)="back()" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="primary">{{headerName}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="true"  color="primary"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

@@ -1,27 +1,47 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{title}}</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>{{title}}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="dismiss()">
-    <ion-row color="primary" class="ion-justify-content-center ion-margin-top">
-      <ion-col size-md="12" size-lg="12" size-xs="12">
-        <ion-item *ngFor="let item of data | keyvalue" [hidden]="item.key === 'id'">
-          <ion-row>
-            <ion-col size-md="12" size-lg="12" size-xs="12">
-              <ion-label>{{item.key}}</ion-label>
-              <ion-input [name]="item.key" type="text" [placeholder]="item.key"
-                         [(ngModel)]="item.value" required ></ion-input>
+    <form #form="ngForm" (ngSubmit)="dismiss()">
+        <ion-row color="primary" class="ion-justify-content-center ion-margin-top">
+            <ion-col size-md="12" size-lg="12" size-xs="12" *ngIf="data">
+                <ion-item *ngFor="let item of data | keyvalue" [hidden]="item.key === 'id'">
+                    <ion-row>
+                        <ion-col size-md="12" size-lg="12" size-xs="12">
+                            <ion-label>{{item.key}}</ion-label>
+                            <ion-input [name]="item.key" type="text" [placeholder]="item.key"
+                                       [(ngModel)]="item.value" required></ion-input>
+                        </ion-col>
+                    </ion-row>
+                </ion-item>
+                <ion-button size="default" type="submit" color="success" [disabled]="form.invalid" expand="block">Edit
+                </ion-button>
+                <ion-button size="default" type="button" color="danger" expand="block" (click)="cancel()">Cancel
+                </ion-button>
             </ion-col>
-          </ion-row>
-        </ion-item>
-        <ion-button size="default" type="submit" color="success" [disabled]="form.invalid" expand="block">Edit
-        </ion-button>
-        <ion-button size="default" type="button" color="danger" expand="block" (click)="cancel()">Cancel
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+            <ion-col size-md="12" size-lg="12" size-xs="12" *ngIf="inputs">
+                <ion-item *ngFor="let item of inputs">
+                    <ion-label color="primary">{{item.name}}</ion-label>
+                    <ion-input [name]="item.key" [disabled]="item.disabled" type="text" *ngIf="item.type==='text'"
+                               ngModel required></ion-input>
+                    <ion-toggle [(ngModel)]="item.value" [name]="item.key" (ionChange)="item.callBack(form)"
+                                *ngIf="item.type==='switcher'"
+                    ></ion-toggle>
+                    <ion-select interface="action-sheet" [name]="item.key" ngModel *ngIf="item.type==='select'"
+                                (ionChange)="item.callback(form)" (ionCancel)="resetValue(item.key)" required>
+                        <ion-select-option *ngFor="let option of item.options" [value]="option.id">{{option['nameEn']}}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-button size="default" type="submit" color="success" [disabled]="form.invalid" expand="block">
+                {{inputs ? 'Add' : 'Edit'}}
+            </ion-button>
+            <ion-button size="default" type="button" color="danger" expand="block" (click)="cancel()">Cancel
+            </ion-button>
+        </ion-row>
+    </form>
 </ion-content>

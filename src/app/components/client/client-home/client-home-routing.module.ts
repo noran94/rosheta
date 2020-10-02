@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: ClientHomePage
+  },
+  {
+    path: 'make-order',
+    loadChildren: () => import('../make-order/make-order.module').then( m => m.MakeOrderPageModule)
+  },
+  {
+    path: 'order-details',
+    loadChildren: () => import('../../shared/order-details/order-details.module').then( m => m.OrderDetailsPageModule)
   }
 ];
 

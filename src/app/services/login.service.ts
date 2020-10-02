@@ -10,4 +10,7 @@ export class LoginService {
   login(form) {
     return this.http.post('login/authenticate', form,{observe:'response', withCredentials: true});
   }
+  logout() {
+    return this.http.post('logout', {});
+  }
 }

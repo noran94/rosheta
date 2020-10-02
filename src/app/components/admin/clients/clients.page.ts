@@ -41,9 +41,7 @@ export class ClientsPage extends Shared {
     }
 
     customOnInit() {
-        this.lookupsService.listGovernorates().subscribe((governorates: any) => {
-            this.governorates.push(...governorates);
-        });
+        this.governorates = this.lookupsService.governorates;
     }
 
     listDistricts() {
