@@ -1,4 +1,4 @@
-<app-header [headerName]="'Make Order'"></app-header>
+<app-header [headerName]="'New Order'"></app-header>
 
 <ion-content>
     <form #form="ngForm" (ngSubmit)="order()">
@@ -8,11 +8,11 @@
             </ion-card-header>
             <ion-card-content>
                 <ion-list>
-                    <ion-radio-group (ionChange)="mapValueToForm($event)" [value]="addresses[0].id">
+                    <ion-radio-group name="addressDTO" [(ngModel)]="addressDTO">
                         <ion-item *ngFor="let address of addresses">
                             <ion-label>{{address.governorateNameEn + ' ' +
                             address.districtNameEn + ' ' + (address.extraInfo ? address.extraInfo : '')}}</ion-label>
-                            <ion-radio slot="start" color="success" [value]="address.id"></ion-radio>
+                            <ion-radio slot="start" color="success" [value]="address"></ion-radio>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-button (click)="addAddress()" slot="end">Add Address</ion-button>
@@ -45,15 +45,9 @@
                     <ion-label color="primary">Extra Info</ion-label>
                     <ion-textarea name="comment" ngModel></ion-textarea>
                 </ion-item>
-                <ion-item>
-                    <ion-fab class="ion-margin-top" horizontal="center">
-                        <ion-fab-button>
-                            <ion-icon name="camera"></ion-icon>
-                        </ion-fab-button>
-                    </ion-fab>
-                </ion-item>
+                <app-image-viewer [uploadImageService]="uploadImageService"></app-image-viewer>
             </ion-card-content>
         </ion-card>
-        <ion-button type="submit" slot="end">Order</ion-button>
+        <ion-button expand="block" type="submit">Order</ion-button>
     </form>
 </ion-content>

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {SharedService} from './shared.service';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +18,11 @@ export class RequestService {
         return this.http.post(this.url + 'initiate/SUBMIT/1', requestDTO);
     }
 
-    process(action: string, requestId: number, comments) {
-        return this.http.post(this.url + action + '/' + requestId, {comment: comments});
+    process(action: string, requestId: number, comments?, price?) {
+        return this.http.put(this.url + action + '/' + requestId + '/process', {comment: comments, price: price});
+    }
+
+    getEligibleActions(id) {
+        return this.http.get(this.url + 'eligible-actions/' + id);
     }
 }

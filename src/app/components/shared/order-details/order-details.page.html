@@ -1,9 +1,144 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>order-details</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header [headerName]="'Order Details'" *ngIf="userService.isPharmacy() || userService.isAdmin()"></app-header>
+<app-header [headerName]="'Order Details'" *ngIf="userService.isClient()" [backHome]="true"></app-header>
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-item *ngIf="ready">
+        <ng-wizard [config]="config" class="w-100 mt-2">
 
+            <ng-wizard-step [title]="'1'" [description]="'Submitted'">
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'2'" [description]="'Accepted'">
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'3'" [description]="'Canceled'" *ngIf="item?.statusId === 3">
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'3'" [description]="'Rejected'" *ngIf="item?.statusId === 4">
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'3'" [description]="'On Delivery'" *ngIf="checkStep()">
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'4'" [description]="'Delivered'" *ngIf="checkStep()">
+            </ng-wizard-step>
+            <ng-wizard-step [description]="'Closed'" *ngIf="item?.statusId === 7">
+            </ng-wizard-step>
+
+        </ng-wizard>
+    </ion-item>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title color="primary">
+                <div class="d-flex">
+                    <div class="col-8">
+                        User Details
+                    </div>
+                    <div class="col-4 ion-text-end" *ngIf="userService.isPharmacy()">
+                        <a [routerLink]="'/chat/' + id">
+                            <ion-icon name="chatbubble-ellipses"></ion-icon>
+                        </a>
+                    </div>
+                </div>
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label>Name</ion-label>
+                <ion-label>{{item?.name}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label>Address</ion-label>
+                <ion-label class="ion-text-wrap">{{address}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label>Mobile</ion-label>
+                <ion-label>{{item?.mobile}}</ion-label>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="userService.isClient() && item?.pharmacyName">
+        <ion-card-header>
+            <ion-card-title color="primary">
+                <div class="d-flex">
+                    <div class="col-8">
+                        Pharmacy
+                    </div>
+                    <div class="col-4 ion-text-end">
+                        <a [routerLink]="'/chat/' + id">
+                            <ion-icon name="chatbubble-ellipses"></ion-icon>
+                        </a>
+                    </div>
+                </div>
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label>{{item?.pharmacyName}}</ion-label>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title color="primary">Products</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list>
+                <ion-item *ngFor="let product of item?.products.split(',')">
+                    <ion-label>{{product}}</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-item *ngIf="uploadImageService.images?.length > 0">
+            <ng-container *ngIf="uploadImageService.images?.length === 1">
+                <ion-img-viewer
+                        scheme="dark"
+                        [swipeToClose]="true"
+                        [src]="uploadImageService.images[0]">
+                </ion-img-viewer>
+            </ng-container>
+
+            <ion-slides pager="true" *ngIf="uploadImageService.images?.length > 1">
+
+                <ion-slide *ngFor="let image of uploadImageService.images">
+                    <ion-img-viewer
+                            scheme="dark"
+                            [swipeToClose]="true"
+                            [src]="image">
+                    </ion-img-viewer>
+                </ion-slide>
+            </ion-slides>
+        </ion-item>
+    </ion-card>
+    <ion-card *ngIf="item?.comment">
+        <ion-card-header>
+            <ion-card-title color="primary">Comments</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label>{{item.comment}}</ion-label>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="item?.price && item?.price > 0">
+        <ion-card-content>
+            <ion-item>
+                <ion-label color="primary">Price</ion-label>
+                <ion-label>{{item.price}} LE</ion-label>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="item?.statusId == 2">
+        <ion-card-header>
+            <ion-card-title color="primary">Price</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-input [(ngModel)]="price"></ion-input>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-item lines="none">
+        <ion-button type="button" color="primary" *ngFor="let action of actions"
+                    (click)="submitAction(action)">{{action}}</ion-button>
+    </ion-item>
 </ion-content>

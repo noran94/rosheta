@@ -1,6 +1,33 @@
-<app-header [headerName]="'requests'"></app-header>
-
+<app-header [headerName]="'Orders'"></app-header>
 
 <ion-content>
 
+    <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div class="scroll" padding>
+        <app-search [inputs]="searchInputs"
+                    (onSearch)="searchItem()"
+                    (onFormInitialized)="initForm($event)"></app-search>
+        <ion-card class="card-padding ion-margin-top">
+            <ion-list>
+                <ion-item class="ion-text-center">
+                    <ion-label>Client</ion-label>
+                    <ion-label>Pharmacy</ion-label>
+                    <ion-label>Status</ion-label>
+                </ion-item>
+                <ion-item class="ion-text-center" *ngFor="let item of list"
+                          [routerLink]="'/admin/order-details/'+item.id">
+                    <ion-label>{{item.createdByName}}</ion-label>
+                    <ion-label>{{item.pharmacyName}}</ion-label>
+                    <ion-label>{{item.requestStatusName}}</ion-label>
+                </ion-item>
+            </ion-list>
+            <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+                </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-card>
+    </div>
 </ion-content>

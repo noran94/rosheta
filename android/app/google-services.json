@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "543434787593",
+    "firebase_url": "https://rosheta-83e9d.firebaseio.com",
+    "project_id": "rosheta-83e9d",
+    "storage_bucket": "rosheta-83e9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543434787593:android:24585d73765536f1bba1d8",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543434787593-mdmcuqgo8r1ustq27c8en72nu492fmsd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLhzQXf0wbAgE7m4rkrsxY-KfuRLdSeK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543434787593-mdmcuqgo8r1ustq27c8en72nu492fmsd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,35 @@
+<app-header [headerName]="'My Orders'"></app-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div class="scroll" padding>
+        <app-search [inputs]="searchInputs"
+                    (onSearch)="searchCustom()"
+                    (onFormInitialized)="initForm($event)"></app-search>
+        <ion-card class="card-padding ion-margin-top">
+            <ion-list>
+                <ion-item class="ion-text-center">
+                    <ion-label>#</ion-label>
+                    <ion-label *ngIf="userService.isPharmacy()">Client</ion-label>
+                    <ion-label *ngIf="userService.isClient()">Pharmacy</ion-label>
+                    <ion-label>Price</ion-label>
+                    <ion-label>Status</ion-label>
+                </ion-item>
+                <ion-item class="ion-text-center" *ngFor="let order of list"
+                          [routerLink]="(userService.isClient() ? '/client': '/pharmacy') + '/order-details/'+order.id">
+                    <ion-label>{{order.id}}</ion-label>
+                    <ion-label *ngIf="userService.isPharmacy()">{{order.createdByName}}</ion-label>
+                    <ion-label *ngIf="userService.isClient()">{{order.pharmacyName}}</ion-label>
+                    <ion-label>{{order.price}}</ion-label>
+                    <ion-label>{{order.requestStatusName}}</ion-label>
+                </ion-item>
+            </ion-list>
+            <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+                </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-card>
+    </div>
+</ion-content>

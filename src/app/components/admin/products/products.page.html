@@ -2,6 +2,9 @@
 
 
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
   <div class="scroll" padding>
       <app-search [inputs]="searchInputs" [isAdd]="true" [addLabel]="'Product'"
                   (onSearch)="searchItem()" (onAdd)="addItem(true)"

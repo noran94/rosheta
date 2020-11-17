@@ -1,6 +1,9 @@
 <app-header [headerName]="'Categories'"></app-header>
 
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <div class="scroll" padding>
         <app-search [inputs]="searchInputs" [isAdd]="true" [addLabel]="'Category'"
                     (onSearch)="searchItem()" (onAdd)="addItem(true)"

@@ -34,7 +34,11 @@ const routes: Routes = [
     },
     {
         path: 'monthly-report',
-        loadChildren: () => import('../monthly-reports/monthly-reports.module').then(m => m.MonthlyReportsPageModule)
+        loadChildren: () => import('../../shared/monthly-reports/monthly-reports.module').then(m => m.MonthlyReportsPageModule)
+    },
+    {
+        path: 'order-details/:id',
+        loadChildren: () => import('../../shared/order-details/order-details.module').then( m => m.OrderDetailsPageModule)
     }
 ];
 

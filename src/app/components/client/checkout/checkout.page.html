@@ -1,0 +1,35 @@
+<app-header [headerName]="'Checkout'"></app-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="addItem(undefined, {}, undefined, callback.bind(this))">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title color="primary">Address</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-radio-group name="addressDTO" [(ngModel)]="addressDTO">
+            <ion-item *ngFor="let address of addresses">
+              <ion-label>{{address.governorateNameEn + ' ' +
+              address.districtNameEn + ' ' + (address.extraInfo ? address.extraInfo : '')}}</ion-label>
+              <ion-radio slot="start" color="success" [value]="address"></ion-radio>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-button (click)="addAddress()" slot="end">Add Address</ion-button>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label color="primary">Price</ion-label>
+          <ion-label>{{price}} LE</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="block" type="submit">Checkout</ion-button>
+  </form>
+</ion-content>

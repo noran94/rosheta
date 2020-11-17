@@ -9,16 +9,18 @@ import { AccessoriesPageRoutingModule } from './accessories-routing.module';
 import { AccessoriesPage } from './accessories.page';
 import { HeaderPageModule } from '../../shared/header/header.module';
 import { SearchPageModule } from '../../shared/search/search.module';
+import {NgxIonicImageViewerModule} from 'ngx-ionic-image-viewer';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    AccessoriesPageRoutingModule,
-    HeaderPageModule,
-    SearchPageModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        AccessoriesPageRoutingModule,
+        HeaderPageModule,
+        SearchPageModule,
+        NgxIonicImageViewerModule
+    ],
   declarations: [AccessoriesPage]
 })
 export class AccessoriesPageModule { }

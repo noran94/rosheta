@@ -1,26 +1,27 @@
-import {OnInit, ViewChild} from '@angular/core';
+import {ViewChild} from '@angular/core';
 import {SharedService} from '../services/shared.service';
-import {IonInfiniteScroll, Platform, ToastController} from '@ionic/angular';
-import {Router} from '@angular/router';
+import {IonInfiniteScroll, Platform} from '@ionic/angular';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult} from '@ionic-native/native-geocoder/ngx';
 
-export abstract class Shared implements OnInit {
+export abstract class Shared {
     list;
+    address;
+    item;
+    id;
+    total;
+    initFilter = {};
     disabledLoading = false;
     isList = true;
-    abstract url;
-    id;
-    initFilter = {};
-    @ViewChild('form', {static: true}) form: any;
-    @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
     lat = 0;
     lng = 0;
     options: NativeGeocoderOptions = {
         useLocale: true,
         maxResults: 5
     };
-    address;
+    @ViewChild('form', {static: true}) form: any;
+    @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+    abstract url;
 
     constructor(public sharedService: SharedService,
                 public geolocation?: Geolocation,
@@ -28,7 +29,10 @@ export abstract class Shared implements OnInit {
                 public platform?: Platform) {
     }
 
-    ngOnInit() {
+    ionViewWillEnter(event?) {
+        if (event) {
+            event.target.complete();
+        }
         this.customOnInit();
         this.sharedService.pageNumber = 0;
         if (this.isList) {
@@ -41,11 +45,14 @@ export abstract class Shared implements OnInit {
         this.sharedService.listItems(filter, this.url).subscribe((data: any) => {
             if (event) {
                 this.list.push(...data.data);
+                this.total = data.total;
                 this.infiniteScroll.complete();
             } else {
+                this.total = data.total;
                 this.list = data.data;
             }
             this.disabledLoading = this.list.length === data.total;
+            this.handleData();
         }, () => {
             if (event) {
                 this.infiniteScroll.complete();
@@ -53,12 +60,16 @@ export abstract class Shared implements OnInit {
         });
     }
 
-    async addItem(reload?, customRequest?) {
+    async addItem(reload?, customRequest?, details?, callback?) {
+        console.log(this.form);
         const filter = Object.assign(this.initFilter, customRequest ? customRequest : this.form.value);
-        return await this.sharedService.addItem(filter, this.url).toPromise().then(() => {
+        return await this.sharedService.addItem(filter, this.url).toPromise().then((data) => {
             this.form.reset();
             if (reload) {
-                this.searchItem();
+                details ? this.getItem() : this.searchItem();
+            }
+            if (callback) {
+                return callback(data);
             }
             this.sharedService.successToast();
             return false;
@@ -68,12 +79,15 @@ export abstract class Shared implements OnInit {
         });
     }
 
-    editItem(modal?) {
-        const data = modal ? modal : this.form.value;
-        const filter = Object.assign(this.initFilter, data);
-        this.sharedService.editItem(filter, this.url).subscribe(() => {
+    editItem(modal?, callback?) {
+        const request = modal ? modal : this.form.value;
+        const filter = Object.assign(this.initFilter, request);
+        this.sharedService.editItem(filter, this.url).subscribe((data) => {
             if (modal) {
                 this.searchItem();
+            }
+            if (callback) {
+                return callback(data);
             }
             this.sharedService.successToast();
         }, (error) => {
@@ -98,9 +112,12 @@ export abstract class Shared implements OnInit {
         this.listItems();
     }
 
-    getItem() {
+    getItem(callback?) {
         this.sharedService.getItem(this.id, this.url).subscribe((data) => {
-            console.log(data);
+            this.item = data;
+            if (callback) {
+                callback();
+            }
         });
     }
 
@@ -168,5 +185,8 @@ export abstract class Shared implements OnInit {
     }
 
     customOnInit() {
+    }
+
+    handleData() {
     }
 }

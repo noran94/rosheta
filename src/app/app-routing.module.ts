@@ -4,6 +4,7 @@ import { AdminGaurdService } from './services/admin-gaurd.service';
 import {ClientGaurdService} from './services/client-gaurd.service';
 import {PharmacyGaurdService} from './services/pharmacy-gaurd.service';
 import {TypeGaurdService} from './services/type-gaurd.service';
+import {AuthGaurdService} from './services/auth-gaurd.service';
 
 const routes: Routes = [
   {
@@ -32,19 +33,9 @@ const routes: Routes = [
     loadChildren: () => import('./components/admin/admin-home/admin-home.module').then( m => m.AdminHomePageModule)
   },
   {
-    path: 'search',
-    loadChildren: () => import('./components/shared/search/search.module').then( m => m.SearchPageModule)
-  },
-  {
-    path: 'header',
-    loadChildren: () => import('./components/shared/header/header.module').then( m => m.HeaderPageModule)
-  },
-  {
-    path: 'menu',
-    loadChildren: () => import('./components/shared/menu/menu.module').then( m => m.MenuPageModule)
+    path: 'chat/:id', canActivate: [AuthGaurdService],
+    loadChildren: () => import('./components/shared/chat/chat.module').then( m => m.ChatPageModule)
   }
-
-
 
 ];
 

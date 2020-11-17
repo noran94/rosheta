@@ -1,0 +1,38 @@
+<ion-item>
+  <ion-row class="w-100">
+    <ion-col size="6" class="text-center">
+      <ion-button (click)="uploadImageService.takePhoto()" color="danger"
+                  shape="round" size="large"  type="button">
+        <ion-icon name="camera"></ion-icon>
+      </ion-button>
+    </ion-col >
+    <ion-col size="6" class="text-center">
+      <ion-button (click)="uploadImageService.selectPhoto()" color="secondary"
+                  shape="round" size="large"  type="button">
+        <ion-icon name="image"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-item>
+<ion-item *ngIf="uploadImageService.images.length > 0">
+  <ng-container *ngIf="uploadImageService.images.length === 1">
+    <ion-fab horizontal="end" vertical="top">
+      <ion-fab-button class="fab-padding" (click)="uploadImageService.deleteImage(uploadImageService.images[0])">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <img [src]="uploadImageService.images[0].src"/>
+  </ng-container>
+
+  <ion-slides pager="true" *ngIf="uploadImageService.images.length > 1">
+
+    <ion-slide *ngFor="let image of uploadImageService.images">
+      <ion-fab  horizontal="end" vertical="top">
+        <ion-fab-button class="fab-padding" (click)="uploadImageService.deleteImage(image)">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <img [src]="image.src"/>
+    </ion-slide>
+  </ion-slides>
+</ion-item>

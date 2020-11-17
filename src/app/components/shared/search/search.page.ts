@@ -11,6 +11,7 @@ export class SearchPage implements AfterViewInit {
     @Input() inputs;
     @Input() addLabel;
     @Input() isAdd = false;
+    @Input() customAddModal;
     @ViewChild('form', {static: true}) form: any;
     @Output() onSearch = new EventEmitter();
     @Output() onAdd = new EventEmitter();
@@ -40,7 +41,7 @@ export class SearchPage implements AfterViewInit {
 
     async openAddModal() {
         const modal = await this.modalController.create({
-            component: ModalComponent,
+            component: this.customAddModal || ModalComponent,
             cssClass: 'my-custom-class',
             componentProps: {
                 inputs: this.inputs,
@@ -50,6 +51,10 @@ export class SearchPage implements AfterViewInit {
         await modal.present();
         const data = await modal.onWillDismiss();
         if (data.data) {
+            if (data.data === 'reload') {
+                this.search();
+                return;
+            }
             this.form.form.patchValue(data.data.data);
             this.onAdd.emit(true);
         }

@@ -1,0 +1,27 @@
+<div class="scroll" padding>
+  <ion-card class="card-padding ion-margin-top" *ngFor="let category of list">
+    <ion-card-header>
+      <ion-card-title color="primary">{{category.nameEn}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="p-0">
+      <ion-list class="p-0">
+        <div class="d-flex">
+          <div *ngFor="let item of category.accessories">
+            <ion-item [routerLink]="'./accessory-details/'+item.id">
+              <div class="d-flex flex-column">
+                <img *ngIf="item.srcImg" [src]="item.srcImg">
+                <img *ngIf="!item.srcImg" src="assets/images/default.jpg">
+                <ion-text>{{item.nameEn}}</ion-text>
+                <ion-text>{{item.price}}</ion-text>
+              </div>
+            </ion-item>
+          </div>
+        </div>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</div>

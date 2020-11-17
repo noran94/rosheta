@@ -1,21 +1,30 @@
 <app-header [headerName]="'accessories'"></app-header>
 
 <ion-content>
-  <div class="scroll" padding>
-    <app-search [inputs]="searchInputs" (onSearch)="searchItem()"
-                (onFormInitialized)="initForm($event)"></app-search>
+    <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div class="scroll" padding>
+        <app-search [inputs]="searchInputs" (onSearch)="searchItem()"
+                    (onFormInitialized)="initForm($event)" [isAdd]="true"
+                    [customAddModal]="addEditAccessory"></app-search>
 
-    <ion-card class="card-padding ion-margin-top">
-      <ion-list>
-        <ion-row color="primary" class="ion-justify-content-center ion-margin-top">
-          <ion-col size-md="3" size-lg="3" size-xs="6" *ngFor="let item of list">
-            <ion-item>
-              {{item.name}}
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-list>
-    </ion-card>
-  </div>
+        <ion-card class="card-padding ion-margin-top">
+            <ion-list>
+                <ion-row color="primary" class="ion-justify-content-center ion-margin-top">
+                    <ion-col size-md="3" size-lg="3" size-xs="6" *ngFor="let item of list">
+                        <ion-item [routerLink]="'./'+item.id">
+                            <div class="d-flex flex-column">
+                                <img *ngIf="item.srcImg" [src]="item.srcImg">
+                                <img *ngIf="!item.srcImg" src="assets/images/default.jpg">
+                                <ion-text>{{item.nameEn}}</ion-text>
+                                <ion-text>{{item.price}}</ion-text>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-list>
+        </ion-card>
+    </div>
 </ion-content>
 

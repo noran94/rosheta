@@ -10,8 +10,6 @@ import {ModalComponent} from '../../shared/modal/modal.component';
     styleUrls: ['./products.page.scss'],
 })
 export class ProductsPage extends Shared {
-    @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
     url = 'product';
     searchInputs = [{
         name: 'name En',

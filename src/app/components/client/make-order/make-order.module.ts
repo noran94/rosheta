@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { MakeOrderPageRoutingModule } from './make-order-routing.module';
 
-import { MakeOrderPage } from './make-order.page';
 import {HeaderPageModule} from '../../shared/header/header.module';
 import {IonicSelectableModule} from 'ionic-selectable';
 
@@ -19,6 +18,6 @@ import {IonicSelectableModule} from 'ionic-selectable';
         HeaderPageModule,
         IonicSelectableModule
     ],
-  declarations: [MakeOrderPage]
+  declarations: []
 })
 export class MakeOrderPageModule {}

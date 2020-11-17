@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title *ngIf="!isEdit">Add Accessory</ion-title>
+        <ion-title *ngIf="isEdit">Edit Accessory</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form #form="ngForm" (ngSubmit)="add()">
+        <ion-item>
+            <ion-label color="primary">Category</ion-label>
+            <ion-select interface="action-sheet" name="categoryId" ngModel required
+                        (ionCancel)="resetValue('categoryId')">
+                <ion-select-option *ngFor="let category of categories" [value]="category.id">{{category.nameEn}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Name English</ion-label>
+            <ion-input name="nameEn" type="text" ngModel required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Name Arabic</ion-label>
+            <ion-input name="nameAr" type="text" ngModel required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Description</ion-label>
+            <ion-textarea name="description" type="text" ngModel required></ion-textarea>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Price</ion-label>
+            <ion-input name="price" type="number" ngModel required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Quantity</ion-label>
+            <ion-input name="quantity" type="number" ngModel></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">On Sale</ion-label>
+            <ion-toggle name="sale" [(ngModel)]="sale"></ion-toggle>
+        </ion-item>
+        <ion-item [hidden]="!form.controls['sale']?.value">
+            <ion-label color="primary">Sale Percentage</ion-label>
+            <ion-input name="salePercentage" type="number" ngModel [required]="form.controls['sale']?.value"></ion-input>
+        </ion-item>
+        <app-image-viewer [uploadImageService]="uploadImageService"></app-image-viewer>
+        <ion-item lines="none" class="ion-margin-top">
+            <div class="d-flex w-100">
+                <div class="col-6">
+                    <ion-button size="default" expand="block"  type="submit" [disabled]="form.invalid">Save</ion-button>
+                </div>
+                <div class="col-6">
+                    <ion-button size="default" type="button" color="danger" expand="block" (click)="isEdit ? location.back() : modalCtrl.dismiss()">Cancel</ion-button>
+                </div>
+            </div>
+        </ion-item>
+    </form>
+</ion-content>

@@ -4,7 +4,7 @@ import {SharedService} from '../../services/shared.service';
 import {LookupsService} from '../../services/lookups.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {NativeGeocoder, NativeGeocoderResult} from '@ionic-native/native-geocoder/ngx';
+import {NativeGeocoder} from '@ionic-native/native-geocoder/ngx';
 import {Platform} from '@ionic/angular';
 
 @Component({
@@ -16,7 +16,6 @@ import {Platform} from '@ionic/angular';
 export class RegisterPage extends Shared {
     url = 'user';
     governorates;
-    districts;
     isList = false;
     defaultValue = true;
     type;
@@ -38,17 +37,6 @@ export class RegisterPage extends Shared {
         this.getCurrentLocation();
     }
 
-    listDistricts() {
-        this.form.form.get('districtId').reset();
-        if (!this.form.form.get('governorateId').value) {
-            this.districts = [];
-            return;
-        }
-        this.lookupsService.listDistricts(this.form.form.get('governorateId').value).subscribe(districts => {
-            this.districts = districts;
-        });
-    }
-
     register() {
         if (!this.form.valid) {
             return;
@@ -61,7 +49,7 @@ export class RegisterPage extends Shared {
         request.addresses = [{
             extraInfo: request.address,
             districtId: request.districtId,
-            governorateId: request.governorateId,
+            governorateId: request.governorate.id,
             lat: this.lat,
             lng: this.lng
         }];

@@ -1,0 +1,22 @@
+<app-header [headerName]="item?.nameEn"></app-header>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <div class="d-flex flex-column">
+          <img *ngIf="item?.srcImg" [src]="item?.srcImg">
+          <img *ngIf="!item?.srcImg" src="assets/images/default.jpg">
+          <ion-text>{{item?.price}}</ion-text>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-text>{{item?.description}}</ion-text>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-item lines="none">
+    <ion-button type="button" color="primary"
+                (click)="addToCart()">Add To Cart</ion-button>
+  </ion-item>
+</ion-content>

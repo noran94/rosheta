@@ -8,7 +8,9 @@
  * For more information on global stylesheets, visit the documentation:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
-
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~ng-wizard/themes/ng_wizard.min.css';
+@import '~ng-wizard/themes/ng_wizard_theme_circles.min.css';
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
@@ -50,4 +52,36 @@
 
 .text-center {
     text-align: center;
+}
+
+.ng-wizard-container.tab-content, .btn-toolbar.ng-wizard-toolbar  {
+    display: none !important;
+}
+
+.ng-wizard-theme-circles>ul.step-anchor>li {
+    margin-left: 0px !important;
+    width: 25% !important;
+    justify-content: center;
+    display: flex;
+}
+.ng-wizard-theme-circles>ul.step-anchor>li>a {
+    width: 50px !important;
+    height: 50px !important;;
+    padding: 16px 0 !important;;
+}
+
+.ng-wizard-theme-circles>ul.step-anchor>li>a>small {
+    white-space: nowrap;
+    justify-content: center;
+    display: flex;
+    bottom: -25px !important;
+}
+
+.closed .ng-wizard-theme-circles>ul.step-anchor>li.done>a {
+    border-color: red !important;
+    background: red !important;
+}
+
+.font-size-21 {
+    font-size: 21px !important;
 }

@@ -50,8 +50,6 @@ export class ClientsPage extends Shared {
             this.districts = [];
             return;
         }
-        this.lookupsService.listDistricts(this.form.form.get('governorateId').value).subscribe((districts: any) => {
-            this.districts.push(...districts);
-        });
+        this.districts.push(...this.lookupsService.listDistricts(this.form.form.get('governorateId').value));
     }
 }

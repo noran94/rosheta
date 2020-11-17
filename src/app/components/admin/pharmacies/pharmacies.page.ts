@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import {Shared} from '../../sharedComponent';
 import {SharedService} from '../../../services/shared.service';
 import {LookupsService} from '../../../services/lookups.service';
+import {ModalComponent} from '../../shared/modal/modal.component';
+import {ModalController} from '@ionic/angular';
+import {AddEditAccessoryPage} from '../accessories/add-edit-accessory/add-edit-accessory.page';
 
 @Component({
     selector: 'app-pharmacies',
@@ -44,7 +47,9 @@ export class PharmaciesPage extends Shared {
     }
     ];
 
-    constructor(public sharedService: SharedService, private lookupsService: LookupsService) {
+    constructor(public sharedService: SharedService,
+                private lookupsService: LookupsService,
+                public modalController: ModalController) {
         super(sharedService);
     }
 
@@ -58,8 +63,22 @@ export class PharmaciesPage extends Shared {
             this.districts = [];
             return;
         }
-        this.lookupsService.listDistricts(this.form.form.get('governorateId').value).subscribe((districts: any) => {
-            this.districts.push(...districts);
-        });
+        this.districts.push(...this.lookupsService.listDistricts(this.form.form.get('governorateId').value));
     }
+
+    // async openEditModal(item) {
+    //     const modal = await this.modalController.create({
+    //         component: EditUserPage,
+    //         cssClass: 'my-custom-class',
+    //         componentProps: {
+    //             id: item.id,
+    //             role: item.roleId
+    //         }
+    //     });
+    //     await modal.present();
+    //     const data = await modal.onWillDismiss();
+    //     if (data.data) {
+    //         this.editItem(data.data.data);
+    //     }
+    // }
 }

@@ -10,5 +10,9 @@
     <param name="ios-package" value="NativeGeocoder"/>
   </feature>
 
+  <feature name="Device">
+    <param name="ios-package" value="CDVDevice"/>
+  </feature>
+
   
 </widget>

@@ -1,0 +1,28 @@
+<div class="scroll" padding>
+    <ion-card class="card-padding ion-margin-top">
+        <ion-card-header>
+            <ion-card-title color="primary">Current Orders</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="p-0">
+            <ion-list class="p-0">
+                <ion-item class="ion-text-center">
+                    <ion-label>#</ion-label>
+                    <ion-label>Client</ion-label>
+                    <ion-label>Status</ion-label>
+                </ion-item>
+                <ion-item *ngFor="let order of that.list" class="ion-text-center"
+                          [routerLink]="['./order-details/' + order.id]">
+                    <ion-label>{{order.id}}</ion-label>
+                    <ion-label>{{order.createdByName}}</ion-label>
+                    <ion-label>{{order.requestStatusName}}</ion-label>
+                </ion-item>
+            </ion-list>
+
+            <ion-item horizontal="center" *ngIf="that.list?.length > 0 && that.total > that.list?.length">
+                <a (click)="that.loadData($event)" class="text-center w-100 " color="primary">
+                    Load More
+                </a>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+</div>

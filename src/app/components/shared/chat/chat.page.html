@@ -1,0 +1,21 @@
+<app-header [headerName]="'Chat'"></app-header>
+<ion-content class="fit-height">
+    <form class="fit-height" #form="ngForm" (ngSubmit)="addItem(true, false, true)">
+        <ion-card class="fit-height">
+            <ion-card-content class="fit-height d-flex flex-column">
+                <div class="d-flex flex-column" [ngClass]="user.id == chat.userId?'align-items-end':'align-items-start'" *ngFor="let chat of item">
+                    <div *ngIf="user.id != chat.userId">{{chat.userName}}</div>
+                    <div>
+                        <span class="mt-3" [ngClass]="user.id == chat.userId ? 'dark-color': 'primary-color'">{{chat.message}}</span>
+                    </div>
+                </div>
+                <ion-item class="send-text align-items-center margin-top-auto">
+                    <ion-textarea placeholder="send message" name="message" required ngModel></ion-textarea>
+                    <ion-button  type="submit" [disabled]="!form.valid">
+                        <ion-icon name="send-outline"></ion-icon>
+                    </ion-button>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+    </form>
+</ion-content>

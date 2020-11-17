@@ -21,7 +21,7 @@ export const ADMIN_MENU = [
     link: '/admin/categories'
   },
   {
-    label: 'Requests',
+    label: 'Orders',
     icon: 'help-circle',
     link: '/admin/requests'
   },
@@ -38,33 +38,25 @@ export const ADMIN_MENU = [
   {
     label: 'Monthly Reports',
     icon: 'help-circle',
-    link: 'it-home/users'
+    link: '/admin/monthly-report'
   }
 ];
 export const PHARMACY_MENU = [
   {
-    id: 1,
-    label: 'MENUITEMS.MENU.TEXT',
-    isTitle: true
+    label: 'Orders History',
+    icon: 'help-circle',
+    link: '/pharmacy/requests-history'
+  }, {
+    label: 'Monthly Reports',
+    icon: 'help-circle',
+    link: '/pharmacy/monthly-report'
   }
 ];
 export const CLIENT_MENU = [
   {
-    id: 1,
-    label: 'MENUITEMS.MENU.TEXT',
-    isTitle: true
-  },
-  {
-    id: 2,
-    label: 'MENUITEMS.USERS',
-    icon: 'bx-user',
-    link: 'it-home/users'
-  },
-  {
-    id: 3,
-    label: 'MENUITEMS.IMPORT_TODAY_FILE',
-    icon: 'bx-user',
-    link: '/it-home/import'
+    label: 'My Orders',
+    icon: 'help-circle',
+    link: '/client/requests-history'
   }
 ];
 

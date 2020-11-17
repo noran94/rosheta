@@ -1,0 +1,22 @@
+<app-header [headerName]="'Cart'"></app-header>
+<ion-content>
+  <ion-card class="card-padding ion-margin-top">
+    <ion-card-content class="p-0">
+      <ion-list class="p-0">
+        <ion-item *ngFor="let cart of list" class="ion-text-center"
+                  [routerLink]="['../accessory-details/' + cart.accessoryId]">
+          <div class="d-flex flex-column w-100">
+            <ion-label>{{cart.accessoryNameEn}}</ion-label>
+            <div class="d-flex justify-content-between w-100">
+              <ion-label>{{cart.price}}</ion-label>
+              <ion-label>{{cart.quantity}}</ion-label>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-button class="ion-margin-top px-4" expand="block" [routerLink]="'/client/checkout/' + getTotalPrice()">
+    Order
+  </ion-button>
+</ion-content>

@@ -41,10 +41,11 @@ export class SharedService {
             }
         }
         params = params.set('pageNum', this.pageNumber);
-        params = params.set('pageSize', this.pageSize.toString());
+        if (!params.get('pageSize')) {
+            params = params.set('pageSize', this.pageSize.toString());
+        }
         return params;
     }
-
 
 
     async successToast(msg?) {
@@ -52,6 +53,16 @@ export class SharedService {
             message: msg ? msg : 'Data Saved Successfully',
             duration: 2000,
             color: 'success'
+        });
+        toast.present();
+    }
+
+
+    async notificationToast(msg) {
+        const toast = await this.toastController.create({
+            message: msg,
+            duration: 2000,
+            color: 'primary'
         });
         toast.present();
     }

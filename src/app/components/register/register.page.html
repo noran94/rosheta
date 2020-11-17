@@ -29,17 +29,17 @@
               </ion-item>
               <ion-item>
                 <ion-label>Governorate</ion-label>
-                <ion-select interface="action-sheet" name="governorateId" ngModel required
-                            (ionChange)="listDistricts()" (ionCancel)="resetValue('governorateId')">
+                <ion-select interface="action-sheet" name="governorate" ngModel required
+                            (ionCancel)="resetValue('governorate')">
                   <ion-select-option *ngFor="let governorate of governorates"
-                                     [value]="governorate.id">{{governorate.nameEn}}</ion-select-option>
+                                     [value]="governorate">{{governorate.nameEn}}</ion-select-option>
                 </ion-select>
               </ion-item>
               <ion-item>
                 <ion-label>District</ion-label>
                 <ion-select interface="action-sheet" name="districtId" ngModel required
                             (ionCancel)="resetValue('districtId')">
-                  <ion-select-option *ngFor="let district of districts"
+                  <ion-select-option *ngFor="let district of form.value.governorate?.districts"
                                      [value]="district.id">{{district.nameEn}}</ion-select-option>
                 </ion-select>
               </ion-item>

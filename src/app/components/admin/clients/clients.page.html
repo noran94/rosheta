@@ -1,6 +1,9 @@
 <app-header [headerName]="'Clients'"></app-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="scroll" padding>
     <app-search [inputs]="searchInputs" (onSearch)="searchItem()"
                 (onFormInitialized)="initForm($event)"></app-search>

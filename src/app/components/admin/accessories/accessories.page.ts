@@ -1,7 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {Shared} from '../../sharedComponent';
 import {SharedService} from '../../../services/shared.service';
 import {LookupsService} from '../../../services/lookups.service';
+import {AddEditAccessoryPage} from './add-edit-accessory/add-edit-accessory.page';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-accessories',
@@ -30,7 +32,10 @@ export class AccessoriesPage extends Shared {
         type: 'select',
         options: [{id: true, nameEn: 'Yes'}, {id: false, nameEn: 'No'}]
     }];
-    constructor(public sharedService: SharedService, private lookupsService: LookupsService) {
+    addEditAccessory = AddEditAccessoryPage;
+
+    constructor(public sharedService: SharedService, private lookupsService: LookupsService,
+                private sanitizer: DomSanitizer) {
         super(sharedService);
     }
 
@@ -40,5 +45,11 @@ export class AccessoriesPage extends Shared {
         });
     }
 
-
+    handleData() {
+        for (const item of this.list) {
+            if (item.img) {
+                item.srcImg = this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + item.img);
+            }
+        }
+    }
 }

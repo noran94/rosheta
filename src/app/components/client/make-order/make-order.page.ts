@@ -3,19 +3,20 @@ import {Shared} from '../../sharedComponent';
 import {SharedService} from '../../../services/shared.service';
 import {LookupsService} from '../../../services/lookups.service';
 import {UserService} from '../../../services/user.service';
-import {FormControl, FormGroup} from '@angular/forms';
 import {ModalComponent} from '../../shared/modal/modal.component';
 import {ModalController, Platform} from '@ionic/angular';
 import * as _ from 'lodash';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {NativeGeocoder} from '@ionic-native/native-geocoder/ngx';
 import {RequestService} from '../../../services/request.service';
+import {Router} from '@angular/router';
+import {UploadImageService} from '../../../services/upload-image.service';
 
 @Component({
     selector: 'app-make-order',
     templateUrl: './make-order.page.html',
     styleUrls: ['./make-order.page.scss'],
-    providers: [Geolocation, NativeGeocoder]
+    providers: [Geolocation, NativeGeocoder, UploadImageService]
 })
 export class MakeOrderPage extends Shared {
     url = 'order';
@@ -40,13 +41,14 @@ export class MakeOrderPage extends Shared {
         key: 'isCurrentAddress',
         type: 'switcher',
         callBack: this.resetAddress.bind(this),
-        value: true
+        value: false
     }, {
         name: 'address',
         key: 'extraInfo',
         type: 'text',
-        disabled: true
+        disabled: false
     }];
+    addressDTO: any;
 
     constructor(public sharedService: SharedService,
                 private lookupsService: LookupsService,
@@ -55,20 +57,24 @@ export class MakeOrderPage extends Shared {
                 private requestService: RequestService,
                 public geolocation: Geolocation,
                 public nativeGeocoder: NativeGeocoder,
-                public platform: Platform) {
+                public platform: Platform,
+                private router: Router,
+                private uploadImageService: UploadImageService) {
         super(sharedService, geolocation, nativeGeocoder, platform);
     }
 
     customOnInit() {
         this.addresses = this.userService.getCurrentUser().addresses;
+        this.addressDTO = this.addresses[0];
         this.products = this.lookupsService.products;
         this.governorates = this.lookupsService.governorates;
         this.getCurrentLocation();
     }
 
     order() {
-        if (!this.form.value.products && !this.form.value.comment) {
+        if (!this.form.value.products && !this.form.value.comment && this.uploadImageService.images.length === 0) {
             this.sharedService.errorToast('Select products or type custom medicine please!');
+            return;
         }
         if (!this.form.value.addressDTO) {
             this.form.value.addressDTO = this.addresses[0];
@@ -79,7 +85,14 @@ export class MakeOrderPage extends Shared {
         });
         request.products = request.products.join();
         console.log(request);
-        this.requestService.initiate(request).subscribe();
+        this.requestService.initiate(request).subscribe((id: any) => {
+            this.uploadImageService.upload('request/' + id, this.callback.bind(this, id));
+        });
+    }
+
+    callback(id) {
+        this.sharedService.successToast();
+        this.router.navigate(['/client/order-details/' + id]);
     }
 
     async addAddress() {
@@ -105,19 +118,20 @@ export class MakeOrderPage extends Shared {
         this.userService.addAddress(address).subscribe((addre: any) => {
             this.sharedService.successToast();
             address.id = addre.id;
-            const governorate = _.find(this.governorates, {id: address.governorateId});
+            const governorate = this.lookupsService.getGovernorateById(address.governorateId);
             address.governorateNameEn = governorate.nameEn;
             address.governorateNameAr = governorate.nameAr;
-            const district = _.find(this.districts, {id: address.districtId});
+            const district = this.lookupsService.getDistrictById(governorate.id, address.districtId);
             address.districtNameEn = district.nameEn;
             address.districtNameAr = district.nameAr;
             this.userService.getCurrentUser().addresses.unshift(address);
             this.userService.updateUserStorage(this.userService.getCurrentUser());
+            this.addressDTO = address;
         });
     }
 
     mapValueToForm(address: CustomEvent) {
-        this.form.value.addressDTO = {id: address.detail.value};
+        this.form.value.addressDTO = address.detail.value;
     }
 
     listDistricts(form) {
@@ -126,9 +140,8 @@ export class MakeOrderPage extends Shared {
             this.districts = [];
             return;
         }
-        this.lookupsService.listDistricts(form.form.get('governorateId').value).subscribe((districts: any) => {
-            this.districts.push(...districts);
-        });
+        this.districts.splice(0);
+        this.districts.push(...this.lookupsService.listDistricts(form.form.get('governorateId').value));
     }
 
     resetAddress(form) {

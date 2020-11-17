@@ -7,16 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { MonthlyReportsPageRoutingModule } from './monthly-reports-routing.module';
 
 import { MonthlyReportsPage } from './monthly-reports.page';
-import { HeaderPageModule } from '../../shared/header/header.module';
+import { HeaderPageModule } from '../header/header.module';
+import {SearchPageModule} from '../search/search.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MonthlyReportsPageRoutingModule,
-    HeaderPageModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        MonthlyReportsPageRoutingModule,
+        HeaderPageModule,
+        SearchPageModule
+    ],
   declarations: [MonthlyReportsPage]
 })
 export class MonthlyReportsPageModule {}
